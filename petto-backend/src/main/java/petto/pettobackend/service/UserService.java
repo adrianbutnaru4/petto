@@ -1,14 +1,5 @@
 package petto.pettobackend.service;
 
-import petto.pettobackend.dto.UserDto;
+import petto.pettobackend.service.generics.AbstractService;
 
-import java.util.List;
-
-public interface UserService {
-
-  UserDto save();
-
-  List<UserDto> findAll();
-
-  void deleteAll();
-}
+public interface UserService extends AbstractService {}

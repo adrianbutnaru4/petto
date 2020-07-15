@@ -1,18 +1,20 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import petto.pettobackend.dto.UserDto;
+import petto.pettobackend.controller.generics.BaseController;
+import petto.pettobackend.dto.user.UserDto;
+import petto.pettobackend.model.user.User;
 import petto.pettobackend.service.UserService;
-
-import java.util.List;
+import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
-public class UserController {
+@RequestMapping(UserController.BASE_URL)
+public class UserController extends BaseController<User, UserDto, String> {
+
+  static final String BASE_URL = "users";
 
   private final UserService userService;
 
@@ -20,21 +22,8 @@ public class UserController {
     this.userService = userService;
   }
 
-  @PostMapping("/users")
-  public UserDto save() {
-    log.info("Saving the user...");
-    return userService.save();
-  }
-
-  @GetMapping("/users")
-  public List<UserDto> findAll() {
-    log.info("Finding all the users...");
-    return userService.findAll();
-  }
-
-  @DeleteMapping("/users")
-  public void deleteAll() {
-    log.info("Deleting all the users...");
-    userService.deleteAll();
+  @Override
+  public AbstractService<User, UserDto, String> getService() {
+    return userService;
   }
 }

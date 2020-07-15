@@ -1,19 +1,20 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import petto.pettobackend.dto.AnimalDto;
+import petto.pettobackend.controller.generics.BaseController;
+import petto.pettobackend.dto.animal.AnimalDto;
+import petto.pettobackend.model.animal.Animal;
 import petto.pettobackend.service.AnimalService;
-
-import java.io.IOException;
-import java.util.List;
+import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
-public class AnimalController {
+@RequestMapping(AnimalController.BASE_URL)
+public class AnimalController extends BaseController<Animal, AnimalDto, String> {
+
+  static final String BASE_URL = "animals";
 
   private final AnimalService animalService;
 
@@ -21,21 +22,8 @@ public class AnimalController {
     this.animalService = animalService;
   }
 
-  @PostMapping("/animals")
-  public void saveAll() throws IOException {
-    log.info("Saving all the animals...");
-    animalService.saveAll();
-  }
-
-  @GetMapping("/animals")
-  public List<AnimalDto> findAll() {
-    log.info("Finding all the animals...");
-    return animalService.findAll();
-  }
-
-  @DeleteMapping("/animals")
-  public void deleteAll() {
-    log.info("Deleting all the animals...");
-    animalService.deleteAll();
+  @Override
+  public AbstractService<Animal, AnimalDto, String> getService() {
+    return animalService;
   }
 }

@@ -1,18 +1,20 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import petto.pettobackend.dto.PostDto;
+import petto.pettobackend.controller.generics.BaseController;
+import petto.pettobackend.dto.adoptionsource.post.PostDto;
+import petto.pettobackend.model.adoptionsource.post.Post;
 import petto.pettobackend.service.PostService;
-
-import java.util.List;
+import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
-public class PostController {
+@RequestMapping(PostController.BASE_URL)
+public class PostController extends BaseController<Post, PostDto, String> {
+
+  static final String BASE_URL = "posts";
 
   private final PostService postService;
 
@@ -20,21 +22,8 @@ public class PostController {
     this.postService = postService;
   }
 
-  @PostMapping("/posts")
-  public PostDto save() {
-    log.info("Saving the post...");
-    return postService.save();
-  }
-
-  @GetMapping("/posts")
-  public List<PostDto> findAll() {
-    log.info("Finding all the posts...");
-    return postService.findAll();
-  }
-
-  @DeleteMapping("/posts")
-  public void deleteAll() {
-    log.info("Deleting all the posts...");
-    postService.deleteAll();
+  @Override
+  public AbstractService<Post, PostDto, String> getService() {
+    return postService;
   }
 }

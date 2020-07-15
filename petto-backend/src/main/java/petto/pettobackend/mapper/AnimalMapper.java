@@ -1,19 +1,13 @@
 package petto.pettobackend.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import petto.pettobackend.dto.AnimalDto;
-import petto.pettobackend.model.Animal;
+import petto.pettobackend.dto.animal.AnimalDto;
+import petto.pettobackend.mapper.generic.AbstractMapper;
+import petto.pettobackend.model.animal.Animal;
 
 @Mapper
-public interface AnimalMapper {
+public interface AnimalMapper extends AbstractMapper<Animal, AnimalDto> {
 
   AnimalMapper MAPPER = Mappers.getMapper(AnimalMapper.class);
-
-  @Mapping(source = "id", target = "id")
-  Animal toModel(AnimalDto animalDto);
-
-  @Mapping(source = "id", target = "id")
-  AnimalDto toDto(Animal animal);
 }

@@ -1,0 +1,33 @@
+package petto.pettobackend.model.animal;
+
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.OneToOne;
+import org.springframework.data.mongodb.core.mapping.Document;
+import petto.pettobackend.model.BaseDocument;
+
+import java.sql.Blob;
+import java.util.Map;
+
+@Document
+public class Animal extends BaseDocument {
+
+  private String name;
+
+  private AnimalRace race;
+
+  private AnimalSex sex;
+
+  private AnimalStatus status;
+
+  private String description;
+
+  private Map<String, Object> characteristics;
+
+  private Blob photo; // TODO: investigate what's the best object type for saving photos
+
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinProperty(name = "healthDetails")
+  private AnimalHealthDetails healthDetails;
+}

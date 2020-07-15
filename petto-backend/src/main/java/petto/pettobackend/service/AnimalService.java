@@ -1,15 +1,5 @@
 package petto.pettobackend.service;
 
-import petto.pettobackend.dto.AnimalDto;
+import petto.pettobackend.service.generics.AbstractService;
 
-import java.io.IOException;
-import java.util.List;
-
-public interface AnimalService {
-
-  void saveAll() throws IOException;
-
-  List<AnimalDto> findAll();
-
-  void deleteAll();
-}
+public interface AnimalService extends AbstractService {}
