@@ -1,4 +1,4 @@
-package petto.pettobackend.mapper.generic;
+package petto.pettobackend.mapper.generics;
 
 public interface AbstractMapper<D, DTO> {
 

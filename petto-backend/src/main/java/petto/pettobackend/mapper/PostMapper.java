@@ -3,7 +3,7 @@ package petto.pettobackend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import petto.pettobackend.dto.adoptionsource.post.PostDto;
-import petto.pettobackend.mapper.generic.AbstractMapper;
+import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.post.Post;
 
 @Mapper
