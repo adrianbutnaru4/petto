@@ -2,6 +2,7 @@ package petto.pettobackend.mapper;
 
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import petto.pettobackend.dto.animal.AnimalDto;
 import petto.pettobackend.dto.base.BaseDto;
@@ -18,7 +19,7 @@ public abstract class AnimalMapper implements AbstractMapper {
   public abstract Animal mapToAnimal(AnimalDto animalDto);
 
   @InheritConfiguration(name = "mapToBaseDto")
-  @Mappings({})
+  @Mappings({@Mapping(source = "post.id", target = "postId")})
   public abstract AnimalDto mapToAnimalDto(Animal animal);
 
   @Override

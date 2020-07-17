@@ -1,8 +1,8 @@
 package petto.pettobackend.dto.user;
 
 import lombok.Data;
+import petto.pettobackend.dto.adoptionsource.post.PostDto;
 import petto.pettobackend.dto.base.BaseDto;
-import petto.pettobackend.model.adoptionsource.post.Post;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public class UserDto extends BaseDto {
 
   private String address; // TODO: investigate appropriate map service to save address
 
-  private List<Post> posts;
+  private List<PostDto> posts;
 }

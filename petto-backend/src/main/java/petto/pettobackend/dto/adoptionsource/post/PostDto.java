@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 public class PostDto extends AdoptionSourceDto {
 
-  private UserDto poster;
+  private String posterId;
 
   private AnimalDto animal;
 

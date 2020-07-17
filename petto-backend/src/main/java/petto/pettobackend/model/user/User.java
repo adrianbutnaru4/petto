@@ -21,7 +21,7 @@ public class User extends BaseDocument {
 
   private String address; // TODO: investigate appropriate map service to save address
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinProperty(name = "posts")
   private List<Post> posts;
 }
