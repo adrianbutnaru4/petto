@@ -4,5 +4,5 @@ import petto.pettobackend.dto.adoptionsource.post.types.RandomlyFoundPostDto;
 
 public interface RandomlyFoundPostService extends PostService {
 
-  RandomlyFoundPostDto save(RandomlyFoundPostDto randomlyFoundPostDto, String posterId);
+  RandomlyFoundPostDto saveForPoster(RandomlyFoundPostDto randomlyFoundPostDto, String posterId);
 }

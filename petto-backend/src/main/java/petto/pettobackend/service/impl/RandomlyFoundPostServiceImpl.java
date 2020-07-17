@@ -24,7 +24,7 @@ public class RandomlyFoundPostServiceImpl implements RandomlyFoundPostService {
   }
 
   @Override
-  public RandomlyFoundPostDto save(RandomlyFoundPostDto randomlyFoundPostDto, String posterId) {
+  public RandomlyFoundPostDto saveForPoster(RandomlyFoundPostDto randomlyFoundPostDto, String posterId) {
     if (userService.exists(posterId)) {
       randomlyFoundPostDto.setPosterId(posterId);
       return (RandomlyFoundPostDto) save(randomlyFoundPostDto);

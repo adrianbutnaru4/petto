@@ -24,7 +24,7 @@ public class LostAndFoundPostServiceImpl implements LostAndFoundPostService {
   }
 
   @Override
-  public LostAndFoundPostDto save(LostAndFoundPostDto lostAndFoundPostDto, String posterId) {
+  public LostAndFoundPostDto saveForPoster(LostAndFoundPostDto lostAndFoundPostDto, String posterId) {
     if (userService.exists(posterId)) {
       lostAndFoundPostDto.setPosterId(posterId);
       return (LostAndFoundPostDto) save(lostAndFoundPostDto);

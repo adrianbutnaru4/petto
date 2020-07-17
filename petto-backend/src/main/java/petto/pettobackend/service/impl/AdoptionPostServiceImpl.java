@@ -24,7 +24,7 @@ public class AdoptionPostServiceImpl implements AdoptionPostService {
   }
 
   @Override
-  public AdoptionPostDto save(AdoptionPostDto adoptionPostDto, String posterId) {
+  public AdoptionPostDto saveForPoster(AdoptionPostDto adoptionPostDto, String posterId) {
     if (userService.exists(posterId)) {
       adoptionPostDto.setPosterId(posterId);
       return adoptionPostDto;

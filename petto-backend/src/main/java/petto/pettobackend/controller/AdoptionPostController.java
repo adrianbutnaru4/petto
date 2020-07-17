@@ -28,7 +28,7 @@ public class AdoptionPostController extends BaseController<AdoptionPostDto, Stri
   @ResponseStatus(HttpStatus.CREATED)
   public AdoptionPostDto saveForPoster(
       @RequestBody AdoptionPostDto dto, @RequestParam("posterId") String posterId) {
-    return getService().save(dto, posterId);
+    return getService().saveForPoster(dto, posterId);
   }
 
   @Override
