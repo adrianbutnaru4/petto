@@ -3,7 +3,6 @@ package petto.pettobackend.mapper;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
-import petto.pettobackend.dto.adoptionsource.post.PostDto;
 import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
 import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionPostMapperConfig;
@@ -22,10 +21,6 @@ public abstract class AdoptionPostMapper implements AbstractMapper {
   @Mappings({})
   public abstract AdoptionPostDto mapToAdoptionPostDto(AdoptionPost adoptionPost);
 
-  @InheritConfiguration(name = "mapToBaseDto")
-  @Mappings({})
-  public abstract PostDto mapToPostDto(AdoptionPostDto adoptionPostDto);
-
   @Override
   public BaseDocument mapToDocument(BaseDto dto) {
     return mapToAdoptionPost((AdoptionPostDto) dto);
@@ -34,10 +29,5 @@ public abstract class AdoptionPostMapper implements AbstractMapper {
   @Override
   public BaseDto mapToDto(BaseDocument document) {
     return mapToAdoptionPostDto((AdoptionPost) document);
-  }
-
-  @Override
-  public BaseDto mapToParentDto(BaseDto dto) {
-    return mapToPostDto((AdoptionPostDto) dto);
   }
 }
