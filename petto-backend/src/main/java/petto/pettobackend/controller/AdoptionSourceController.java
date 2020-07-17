@@ -8,9 +8,7 @@ import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.AdoptionSourceDto;
 import petto.pettobackend.mapper.AdoptionSourceMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.adoptionsource.AdoptionSource;
 import petto.pettobackend.service.AdoptionSourceService;
-import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
@@ -26,7 +24,7 @@ public class AdoptionSourceController extends BaseController<AdoptionSourceDto, 
   }
 
   @Override
-  public AbstractService<AdoptionSource, AdoptionSourceDto, String> getService() {
+  public AdoptionSourceService getService() {
     return adoptionSourceService;
   }
 

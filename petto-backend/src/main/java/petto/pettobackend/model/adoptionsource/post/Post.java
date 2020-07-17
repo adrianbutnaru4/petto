@@ -1,11 +1,13 @@
 package petto.pettobackend.model.adoptionsource.post;
 
-import io.github.kaiso.relmongo.annotation.*;
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.OneToOne;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
 import petto.pettobackend.model.animal.Animal;
-import petto.pettobackend.model.user.User;
 
 import java.sql.Timestamp;
 
@@ -13,8 +15,7 @@ import java.sql.Timestamp;
 @Document(collection = "post")
 public class Post extends AdoptionSource {
 
-  @ManyToOne(mappedBy = "posts", fetch = FetchType.LAZY)
-  private User poster;
+  private String posterId;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinProperty(name = "animal")

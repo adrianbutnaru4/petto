@@ -2,15 +2,13 @@ package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.post.types.LostAndFoundPostDto;
 import petto.pettobackend.mapper.LostAndFoundPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.adoptionsource.post.types.LostAndFoundPost;
 import petto.pettobackend.service.LostAndFoundPostService;
-import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
@@ -25,8 +23,15 @@ public class LostAndFoundPostController extends BaseController<LostAndFoundPostD
     this.lostAndFoundPostService = lostAndFoundPostService;
   }
 
+  @PostMapping(value = "/saveForPoster")
+  @ResponseStatus(HttpStatus.CREATED)
+  public LostAndFoundPostDto saveForPoster(
+      @RequestBody LostAndFoundPostDto dto, @RequestParam("posterId") String posterId) {
+    return getService().save(dto, posterId);
+  }
+
   @Override
-  public AbstractService<LostAndFoundPost, LostAndFoundPostDto, String> getService() {
+  public LostAndFoundPostService getService() {
     return lostAndFoundPostService;
   }
 

@@ -5,7 +5,6 @@ import io.github.kaiso.relmongo.annotation.JoinProperty;
 import io.github.kaiso.relmongo.annotation.OneToOne;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
-import petto.pettobackend.model.adoptionsource.post.Post;
 import petto.pettobackend.model.base.BaseDocument;
 
 import java.sql.Blob;
@@ -29,8 +28,7 @@ public class Animal extends BaseDocument {
 
   private Blob photo; // TODO: investigate what's the best object type for saving photos
 
-  @OneToOne(mappedBy = "animal", fetch = FetchType.LAZY)
-  private Post post;
+  private String postId;
 
   @OneToOne(fetch = FetchType.EAGER)
   @JoinProperty(name = "healthDetails")

@@ -8,4 +8,6 @@ public interface AbstractMapper<D extends BaseDocument, DTO extends BaseDto> {
   D mapToDocument(DTO dto);
 
   DTO mapToDto(D document);
+
+  DTO mapToParentDto(DTO dto);
 }

@@ -1,5 +1,8 @@
 package petto.pettobackend.service;
 
-import petto.pettobackend.service.generics.AbstractService;
+import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
 
-public interface AdoptionPostService extends AbstractService {}
+public interface AdoptionPostService extends PostService {
+
+  AdoptionPostDto save(AdoptionPostDto adoptionPostDto, String posterId);
+}

@@ -2,15 +2,13 @@ package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.post.types.RandomlyFoundPostDto;
 import petto.pettobackend.mapper.RandomlyFoundPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.adoptionsource.post.types.RandomlyFoundPost;
 import petto.pettobackend.service.RandomlyFoundPostService;
-import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
@@ -25,8 +23,15 @@ public class RandomlyFoundPostController extends BaseController<RandomlyFoundPos
     this.randomlyFoundPostService = randomlyFoundPostService;
   }
 
+  @PostMapping(value = "/saveForPoster")
+  @ResponseStatus(HttpStatus.CREATED)
+  public RandomlyFoundPostDto saveForPoster(
+      @RequestBody RandomlyFoundPostDto dto, @RequestParam("posterId") String posterId) {
+    return getService().save(dto, posterId);
+  }
+
   @Override
-  public AbstractService<RandomlyFoundPost, RandomlyFoundPostDto, String> getService() {
+  public RandomlyFoundPostService getService() {
     return randomlyFoundPostService;
   }
 

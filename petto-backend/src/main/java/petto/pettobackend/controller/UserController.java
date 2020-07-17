@@ -8,9 +8,7 @@ import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.user.UserDto;
 import petto.pettobackend.mapper.UserMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.user.User;
 import petto.pettobackend.service.UserService;
-import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
@@ -26,7 +24,7 @@ public class UserController extends BaseController<UserDto, String> {
   }
 
   @Override
-  public AbstractService<User, UserDto, String> getService() {
+  public UserService getService() {
     return userService;
   }
 

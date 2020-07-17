@@ -2,15 +2,13 @@ package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.animal.AnimalDto;
 import petto.pettobackend.mapper.AnimalMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.animal.Animal;
 import petto.pettobackend.service.AnimalService;
-import petto.pettobackend.service.generics.AbstractService;
 
 @Slf4j
 @RestController
@@ -25,8 +23,14 @@ public class AnimalController extends BaseController<AnimalDto, String> {
     this.animalService = animalService;
   }
 
+  @PostMapping(value = "/saveForPost")
+  @ResponseStatus(HttpStatus.CREATED)
+  public AnimalDto saveForPost(@RequestBody AnimalDto dto, @RequestParam("postId") String postId) {
+    return getService().save(dto, postId);
+  }
+
   @Override
-  public AbstractService<Animal, AnimalDto, String> getService() {
+  public AnimalService getService() {
     return animalService;
   }
 
