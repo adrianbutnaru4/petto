@@ -13,6 +13,7 @@ import java.util.List;
 public abstract class BaseController<DTO extends BaseDto, ID extends Serializable>
     implements AbstractController<DTO, ID> {
 
+  // TODO: add pagination
   @GetMapping("/findAll")
   public List<DTO> findAll() {
     return getService().findAll();
