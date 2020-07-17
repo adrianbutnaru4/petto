@@ -120,6 +120,12 @@
             <artifactId>relmongo</artifactId>
             <version>3.4.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>7.0.0.Alpha4</version>
+        </dependency>
     </dependencies>
 
     <build>

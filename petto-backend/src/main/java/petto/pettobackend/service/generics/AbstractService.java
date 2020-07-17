@@ -31,6 +31,10 @@ public interface AbstractService<
     return getMapper().mapToDto(d);
   }
 
+  default boolean exists(ID id) {
+    return getRepository().existsById(id);
+  }
+
   @Transactional()
   default void delete(ID id) {
     getRepository()
