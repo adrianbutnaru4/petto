@@ -1,10 +1,12 @@
 package petto.pettobackend.dto.user;
 
-import petto.pettobackend.dto.BaseDto;
+import lombok.Data;
+import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.model.adoptionsource.post.Post;
 
 import java.util.List;
 
+@Data
 public class UserDto extends BaseDto {
 
   private String firstName;

@@ -2,9 +2,10 @@ package petto.pettobackend.service.generics;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.transaction.annotation.Transactional;
-import petto.pettobackend.dto.BaseDto;
+import petto.pettobackend.dto.base.BaseDto;
+import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.BaseDocument;
+import petto.pettobackend.model.base.BaseDocument;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,14 +27,19 @@ public interface AbstractService<
   }
 
   default DTO findById(ID id) {
-    D d = getRepository().findById(id).orElse(null);
+    D d = getRepository().findById(id).orElseThrow(DocumentNotFoundException::new);
     return getMapper().mapToDto(d);
   }
 
   @Transactional()
   default void delete(ID id) {
-    D d = getRepository().findById(id).orElse(null);
-    getRepository().delete(d);
+    getRepository()
+        .findById(id)
+        .ifPresentOrElse(
+            getRepository()::delete,
+            () -> {
+              throw new DocumentNotFoundException();
+            });
   }
 
   MongoRepository<D, ID> getRepository();

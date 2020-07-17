@@ -1,7 +1,7 @@
 package petto.pettobackend.controller.generics;
 
 import org.springframework.web.bind.annotation.*;
-import petto.pettobackend.dto.BaseDto;
+import petto.pettobackend.dto.base.BaseDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,7 +20,7 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
   }
 
   @PostMapping(value = "/save")
-  public DTO save(@ModelAttribute DTO dto) {
+  public DTO save(@RequestBody DTO dto) {
     return getService().save(dto);
   }
 

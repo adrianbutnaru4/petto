@@ -1,6 +1,7 @@
 package petto.pettobackend.dto.animal;
 
-import petto.pettobackend.dto.BaseDto;
+import lombok.Data;
+import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.model.animal.AnimalHealthDetails;
 import petto.pettobackend.model.animal.AnimalRace;
 import petto.pettobackend.model.animal.AnimalSex;
@@ -9,6 +10,7 @@ import petto.pettobackend.model.animal.AnimalStatus;
 import java.sql.Blob;
 import java.util.Map;
 
+@Data
 public class AnimalDto extends BaseDto {
 
   private String name;

@@ -1,5 +1,6 @@
 package petto.pettobackend.service.impl;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.mapper.AnimalMapper;
@@ -23,6 +24,6 @@ public class AnimalServiceImpl implements AnimalService {
 
   @Override
   public AbstractMapper getMapper() {
-    return AnimalMapper.MAPPER;
+    return Mappers.getMapper(AnimalMapper.class);
   }
 }

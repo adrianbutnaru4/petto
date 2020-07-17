@@ -4,13 +4,15 @@ import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
 import io.github.kaiso.relmongo.annotation.JoinProperty;
 import io.github.kaiso.relmongo.annotation.OneToMany;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
 import petto.pettobackend.model.animal.Animal;
 
 import java.util.List;
 
-@Document
+@Data
+@Document(collection = "shelter")
 public class Shelter extends AdoptionSource {
 
   private String name;

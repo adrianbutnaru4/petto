@@ -1,4 +1,4 @@
-package petto.pettobackend.dto;
+package petto.pettobackend.dto.base;
 
 import lombok.Data;
 

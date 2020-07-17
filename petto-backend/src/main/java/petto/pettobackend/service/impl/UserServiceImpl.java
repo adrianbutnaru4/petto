@@ -1,5 +1,6 @@
 package petto.pettobackend.service.impl;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.mapper.UserMapper;
@@ -23,6 +24,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public AbstractMapper getMapper() {
-    return UserMapper.MAPPER;
+    return Mappers.getMapper(UserMapper.class);
   }
 }

@@ -4,12 +4,14 @@ import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
 import io.github.kaiso.relmongo.annotation.JoinProperty;
 import io.github.kaiso.relmongo.annotation.OneToOne;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import petto.pettobackend.model.adoptionsource.post.Post;
 import petto.pettobackend.model.adoptionsource.post.PostType;
 import petto.pettobackend.model.user.User;
 
-@Document
+@Data
+@Document(collection = "lost_and_found_post")
 public class LostAndFoundPost extends Post {
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

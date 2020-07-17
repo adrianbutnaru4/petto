@@ -1,5 +1,7 @@
 package petto.pettobackend.dto.adoptionsource;
 
-import petto.pettobackend.dto.BaseDto;
+import lombok.Data;
+import petto.pettobackend.dto.base.BaseDto;
 
+@Data
 public class AdoptionSourceDto extends BaseDto {}

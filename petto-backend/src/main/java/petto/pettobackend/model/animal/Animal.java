@@ -4,13 +4,15 @@ import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
 import io.github.kaiso.relmongo.annotation.JoinProperty;
 import io.github.kaiso.relmongo.annotation.OneToOne;
+import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
-import petto.pettobackend.model.BaseDocument;
+import petto.pettobackend.model.base.BaseDocument;
 
 import java.sql.Blob;
 import java.util.Map;
 
-@Document
+@Data
+@Document(collection = "animal")
 public class Animal extends BaseDocument {
 
   private String name;

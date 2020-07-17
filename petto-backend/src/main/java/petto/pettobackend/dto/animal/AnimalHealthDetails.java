@@ -1,5 +1,7 @@
 package petto.pettobackend.dto.animal;
 
-import petto.pettobackend.model.BaseDocument;
+import lombok.Data;
+import petto.pettobackend.model.base.BaseDocument;
 
+@Data
 public class AnimalHealthDetails extends BaseDocument {}

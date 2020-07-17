@@ -1,5 +1,6 @@
 package petto.pettobackend.service.impl;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.mapper.PostMapper;
@@ -23,6 +24,6 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public AbstractMapper getMapper() {
-    return PostMapper.MAPPER;
+    return Mappers.getMapper(PostMapper.class);
   }
 }
