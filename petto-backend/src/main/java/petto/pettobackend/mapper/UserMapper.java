@@ -18,6 +18,7 @@ public abstract class UserMapper implements AbstractMapper {
   public abstract User mapToUser(UserDto userDto);
 
   @InheritConfiguration(name = "mapToBaseDto")
+  @Mappings({})
   public abstract UserDto mapToUserDto(User user);
 
   @Override
