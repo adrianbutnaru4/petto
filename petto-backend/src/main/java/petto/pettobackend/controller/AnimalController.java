@@ -13,7 +13,7 @@ import petto.pettobackend.service.AnimalService;
 @Slf4j
 @RestController
 @RequestMapping(AnimalController.BASE_URL)
-public class AnimalController extends BaseController<AnimalDto, String> {
+public class AnimalController extends BaseController<AnimalDto, Long> {
 
   static final String BASE_URL = "animals";
 

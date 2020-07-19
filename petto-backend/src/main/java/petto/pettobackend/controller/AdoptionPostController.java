@@ -5,7 +5,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
-import petto.pettobackend.dto.adoptionsource.post.PostDto;
 import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
 import petto.pettobackend.mapper.AdoptionPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
@@ -14,7 +13,7 @@ import petto.pettobackend.service.AdoptionPostService;
 @Slf4j
 @RestController
 @RequestMapping(AdoptionPostController.BASE_URL)
-public class AdoptionPostController extends BaseController<AdoptionPostDto, String> {
+public class AdoptionPostController extends BaseController<AdoptionPostDto, Long> {
 
   static final String BASE_URL = "adoptionposts";
 

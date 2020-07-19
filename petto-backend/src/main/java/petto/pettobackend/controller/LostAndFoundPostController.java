@@ -13,7 +13,7 @@ import petto.pettobackend.service.LostAndFoundPostService;
 @Slf4j
 @RestController
 @RequestMapping(LostAndFoundPostController.BASE_URL)
-public class LostAndFoundPostController extends BaseController<LostAndFoundPostDto, String> {
+public class LostAndFoundPostController extends BaseController<LostAndFoundPostDto, Long> {
 
   static final String BASE_URL = "lostandfoundposts";
 

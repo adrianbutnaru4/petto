@@ -41,6 +41,7 @@ public class RandomlyFoundPostServiceImpl implements RandomlyFoundPostService {
       randomlyFoundPostDto.setType(PostType.RANDOMLY_FOUND_POST);
       PostDto parentPost = (PostDto) postService.save(randomlyFoundPostDto);
       poster.getPosts().add(parentPost);
+      userService.save(poster);
       randomlyFoundPostDto.setParentPostId(parentPost.getId());
       return (RandomlyFoundPostDto) save(randomlyFoundPostDto);
     } else {

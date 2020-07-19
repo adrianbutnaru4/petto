@@ -13,7 +13,7 @@ import petto.pettobackend.service.UserService;
 @Slf4j
 @RestController
 @RequestMapping(UserController.BASE_URL)
-public class UserController extends BaseController<UserDto, String> {
+public class UserController extends BaseController<UserDto, Long> {
 
   static final String BASE_URL = "users";
 

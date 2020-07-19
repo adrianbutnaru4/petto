@@ -13,7 +13,7 @@ import petto.pettobackend.service.ShelterService;
 @Slf4j
 @RestController
 @RequestMapping(ShelterController.BASE_URL)
-public class ShelterController extends BaseController<ShelterDto, String> {
+public class ShelterController extends BaseController<ShelterDto, Long> {
 
   static final String BASE_URL = "shelters";
 

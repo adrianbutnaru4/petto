@@ -13,7 +13,7 @@ import petto.pettobackend.service.RandomlyFoundPostService;
 @Slf4j
 @RestController
 @RequestMapping(RandomlyFoundPostController.BASE_URL)
-public class RandomlyFoundPostController extends BaseController<RandomlyFoundPostDto, String> {
+public class RandomlyFoundPostController extends BaseController<RandomlyFoundPostDto, Long> {
 
   static final String BASE_URL = "randomlyfoundposts";
 

@@ -13,7 +13,7 @@ import petto.pettobackend.service.AdoptionSourceService;
 @Slf4j
 @RestController
 @RequestMapping(AdoptionSourceController.BASE_URL)
-public class AdoptionSourceController extends BaseController<AdoptionSourceDto, String> {
+public class AdoptionSourceController extends BaseController<AdoptionSourceDto, Long> {
 
   static final String BASE_URL = "adoptionsources";
 

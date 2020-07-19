@@ -1,9 +1,6 @@
 package petto.pettobackend.mapper;
 
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
 import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionPostMapperConfig;
@@ -21,12 +18,28 @@ public abstract class AdoptionPostMapper implements AbstractMapper {
   })
   public abstract AdoptionPost mapToAdoptionPost(AdoptionPostDto adoptionPostDto);
 
+  @AfterMapping
+  public void afterMapToAdoptionPost(
+      AdoptionPostDto adoptionPostDto, @MappingTarget AdoptionPost adoptionPost) {
+    if (adoptionPostDto.getAnimalId() == null) {
+      adoptionPost.setAnimal(null);
+    }
+  }
+
   @InheritConfiguration(name = "mapToPostDto")
   @Mappings({
     @Mapping(target = "parentPostId", source = "parentPost.id"),
     @Mapping(target = "adopterId", source = "adopter.id")
   })
   public abstract AdoptionPostDto mapToAdoptionPostDto(AdoptionPost adoptionPost);
+
+  @AfterMapping
+  public void afterMapToAdoptionPostDto(
+      AdoptionPost adoptionPost, @MappingTarget AdoptionPostDto adoptionPostDto) {
+    if (adoptionPost.getAnimal() == null) {
+      adoptionPostDto.setAnimalId(null);
+    }
+  }
 
   @Override
   public BaseEntity mapToEntity(BaseDto dto) {

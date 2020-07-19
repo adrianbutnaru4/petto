@@ -40,6 +40,7 @@ public class AdoptionPostServiceImpl implements AdoptionPostService {
       adoptionPostDto.setType(PostType.ADOPTION_POST);
       PostDto parentPost = (PostDto) postService.save(adoptionPostDto);
       poster.getPosts().add(parentPost);
+      userService.save(poster);
       adoptionPostDto.setParentPostId(parentPost.getId());
       return (AdoptionPostDto) save(adoptionPostDto);
     } else {

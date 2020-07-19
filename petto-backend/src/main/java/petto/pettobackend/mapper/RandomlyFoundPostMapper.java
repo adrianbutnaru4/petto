@@ -1,9 +1,6 @@
 package petto.pettobackend.mapper;
 
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 import petto.pettobackend.dto.adoptionsource.post.types.RandomlyFoundPostDto;
 import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.RandomlyFoundPostMapperConfig;
@@ -21,12 +18,30 @@ public abstract class RandomlyFoundPostMapper implements AbstractMapper {
   public abstract RandomlyFoundPost mapToRandomlyFoundPost(
       RandomlyFoundPostDto randomlyFoundPostDto);
 
+  @AfterMapping
+  public void afterMapToRandomlyFoundPost(
+      RandomlyFoundPostDto randomlyFoundPostDto,
+      @MappingTarget RandomlyFoundPost randomlyFoundPost) {
+    if (randomlyFoundPostDto.getAnimalId() == null) {
+      randomlyFoundPost.setAnimal(null);
+    }
+  }
+
   @InheritConfiguration(name = "mapToPostDto")
   @Mappings({
     @Mapping(target = "parentPostId", source = "parentPost.id"),
   })
   public abstract RandomlyFoundPostDto mapToRandomlyFoundPostDto(
       RandomlyFoundPost randomlyFoundPost);
+
+  @AfterMapping
+  public void afterMapToRandomlyFoundPostDto(
+      RandomlyFoundPost randomlyFoundPost,
+      @MappingTarget RandomlyFoundPostDto randomlyFoundPostDto) {
+    if (randomlyFoundPost.getAnimal() == null) {
+      randomlyFoundPostDto.setAnimalId(null);
+    }
+  }
 
   @Override
   public BaseEntity mapToEntity(BaseDto dto) {

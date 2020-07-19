@@ -14,7 +14,7 @@ import petto.pettobackend.service.PostService;
 @Slf4j
 @RestController
 @RequestMapping(PostController.BASE_URL)
-public class PostController extends BaseController<PostDto, String> {
+public class PostController extends BaseController<PostDto, Long> {
 
   static final String BASE_URL = "posts";
 

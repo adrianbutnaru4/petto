@@ -40,6 +40,7 @@ public class LostAndFoundPostServiceImpl implements LostAndFoundPostService {
       lostAndFoundPostDto.setType(PostType.LOST_AND_FOUND_POST);
       PostDto parentPost = (PostDto) postService.save(lostAndFoundPostDto);
       poster.getPosts().add(parentPost);
+      userService.save(poster);
       lostAndFoundPostDto.setParentPostId(parentPost.getId());
       return (LostAndFoundPostDto) save(lostAndFoundPostDto);
     } else {
