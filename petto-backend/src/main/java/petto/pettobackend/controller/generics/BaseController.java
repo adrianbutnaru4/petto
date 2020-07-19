@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import petto.pettobackend.dto.base.BaseDto;
-import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
+import petto.pettobackend.exceptionhandling.exceptions.EntityNotFoundException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,9 +23,9 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
   public DTO findById(@PathVariable("id") ID id) {
     try {
       return getService().findById(id);
-    } catch (DocumentNotFoundException e) {
+    } catch (EntityNotFoundException e) {
       throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND, String.format("Document with id '%s' was not found.", id), e);
+          HttpStatus.NOT_FOUND, String.format("Entity with id '%s' was not found.", id), e);
     }
   }
 
@@ -38,11 +38,11 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
   @PutMapping("{id}/update")
   public DTO update(@PathVariable("id") ID id, @RequestBody DTO dto) {
     if (getService().exists(id)) {
-      dto.setId((String) id);
+      dto.setId((Long) id);
       return getService().save(dto);
     } else {
       // TODO: properly handle this
-      throw new DocumentNotFoundException();
+      throw new EntityNotFoundException();
     }
   }
 
@@ -50,9 +50,9 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
   public void delete(@PathVariable("id") ID id) {
     try {
       getService().delete(id);
-    } catch (DocumentNotFoundException e) {
+    } catch (EntityNotFoundException e) {
       throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND, String.format("Document with id '%s' was not found.", id), e);
+          HttpStatus.NOT_FOUND, String.format("Entity with id '%s' was not found.", id), e);
     }
   }
 }

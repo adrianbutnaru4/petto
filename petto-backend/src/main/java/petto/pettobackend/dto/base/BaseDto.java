@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class BaseDto {
 
-  private String id;
+  private long id;
 }

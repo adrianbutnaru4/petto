@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionSourceMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.post.types.RandomlyFoundPost;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = AdoptionSourceMapperConfig.class)
 public abstract class RandomlyFoundPostMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract RandomlyFoundPost mapToRandomlyFoundPost(
       RandomlyFoundPostDto randomlyFoundPostDto);
@@ -24,12 +24,12 @@ public abstract class RandomlyFoundPostMapper implements AbstractMapper {
       RandomlyFoundPost randomlyFoundPost);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToRandomlyFoundPost((RandomlyFoundPostDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToRandomlyFoundPostDto((RandomlyFoundPost) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToRandomlyFoundPostDto((RandomlyFoundPost) entity);
   }
 }

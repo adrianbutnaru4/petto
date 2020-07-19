@@ -1,25 +1,23 @@
 package petto.pettobackend.model.adoptionsource.shelter;
 
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
-import petto.pettobackend.model.animal.Animal;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "shelters")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Document(collection = "shelter")
 public class Shelter extends AdoptionSource {
 
   private String name;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinProperty(name = "animals")
-  private List<Animal> animals;
+  //  private List<Animal> animals;  // TODO: investigate how to tell when an animal is in a shelter
 
   private String address; // TODO: investigate appropriate map service to save shelter address
 }

@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.PostMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.post.Post;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = PostMapperConfig.class)
 public abstract class PostMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract Post mapToPost(PostDto postDto);
 
@@ -22,12 +22,12 @@ public abstract class PostMapper implements AbstractMapper {
   public abstract PostDto mapToPostDto(Post post);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToPost((PostDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToPostDto((Post) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToPostDto((Post) entity);
   }
 }

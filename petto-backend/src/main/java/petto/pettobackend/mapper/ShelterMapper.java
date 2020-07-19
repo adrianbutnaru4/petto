@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionSourceMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.shelter.Shelter;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = AdoptionSourceMapperConfig.class)
 public abstract class ShelterMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract Shelter mapToShelter(ShelterDto shelterDto);
 
@@ -22,12 +22,12 @@ public abstract class ShelterMapper implements AbstractMapper {
   public abstract ShelterDto mapToShelterDto(Shelter shelter);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToShelter((ShelterDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToShelterDto((Shelter) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToShelterDto((Shelter) entity);
   }
 }

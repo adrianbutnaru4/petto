@@ -1,9 +1,12 @@
 package petto.pettobackend.model.adoptionsource;
 
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "adoption_sources")
 @Data
-@Document(collection = "adoption_source")
-public class AdoptionSource extends BaseDocument {}
+public class AdoptionSource extends BaseEntity {}

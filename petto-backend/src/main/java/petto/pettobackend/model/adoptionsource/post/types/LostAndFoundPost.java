@@ -1,25 +1,29 @@
 package petto.pettobackend.model.adoptionsource.post.types;
 
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.post.Post;
 import petto.pettobackend.model.adoptionsource.post.PostType;
 import petto.pettobackend.model.user.User;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "lost_and_found_posts")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Document(collection = "lost_and_found_post")
 public class LostAndFoundPost extends Post {
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinProperty(name = "recoverer")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "post_id", referencedColumnName = "id")
+  private Post parentPost;
+
   private User recoverer;
 
   private String
       lostAnimalAddress; // TODO: investigate appropriate map service to save address set by poster
 
-  private PostType type = PostType.LOST_AND_FOUND;
+  private PostType type = PostType.LOST_AND_FOUND_POST;
 }

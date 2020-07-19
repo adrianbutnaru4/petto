@@ -1,10 +1,11 @@
 package petto.pettobackend.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.dto.adoptionsource.post.types.RandomlyFoundPostDto;
-import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
+import petto.pettobackend.dto.user.UserDto;
+import petto.pettobackend.exceptionhandling.exceptions.EntityNotFoundException;
 import petto.pettobackend.mapper.RandomlyFoundPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.repository.RandomlyFoundPostRepository;
@@ -24,17 +25,19 @@ public class RandomlyFoundPostServiceImpl implements RandomlyFoundPostService {
   }
 
   @Override
-  public RandomlyFoundPostDto saveForPoster(RandomlyFoundPostDto randomlyFoundPostDto, String posterId) {
+  public RandomlyFoundPostDto saveForPoster(
+      RandomlyFoundPostDto randomlyFoundPostDto, Long posterId) {
     if (userService.exists(posterId)) {
-      randomlyFoundPostDto.setPosterId(posterId);
+      UserDto poster = (UserDto) userService.findById(posterId);
+      randomlyFoundPostDto.setPoster(poster);
       return (RandomlyFoundPostDto) save(randomlyFoundPostDto);
     } else {
-      throw new DocumentNotFoundException();
+      throw new EntityNotFoundException();
     }
   }
 
   @Override
-  public MongoRepository getRepository() {
+  public CrudRepository getRepository() {
     return randomlyFoundPostRepository;
   }
 

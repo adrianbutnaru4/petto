@@ -1,10 +1,11 @@
 package petto.pettobackend.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
-import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
+import petto.pettobackend.dto.user.UserDto;
+import petto.pettobackend.exceptionhandling.exceptions.EntityNotFoundException;
 import petto.pettobackend.mapper.AdoptionPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.repository.AdoptionPostRepository;
@@ -24,17 +25,18 @@ public class AdoptionPostServiceImpl implements AdoptionPostService {
   }
 
   @Override
-  public AdoptionPostDto saveForPoster(AdoptionPostDto adoptionPostDto, String posterId) {
+  public AdoptionPostDto saveForPoster(AdoptionPostDto adoptionPostDto, Long posterId) {
     if (userService.exists(posterId)) {
-      adoptionPostDto.setPosterId(posterId);
-      return adoptionPostDto;
+      UserDto poster = (UserDto) userService.findById(posterId);
+      adoptionPostDto.setPoster(poster);
+      return (AdoptionPostDto) save(adoptionPostDto);
     } else {
-      throw new DocumentNotFoundException();
+      throw new EntityNotFoundException();
     }
   }
 
   @Override
-  public MongoRepository getRepository() {
+  public CrudRepository getRepository() {
     return adoptionPostRepository;
   }
 

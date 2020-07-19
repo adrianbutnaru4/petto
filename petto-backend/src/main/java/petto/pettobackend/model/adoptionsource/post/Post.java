@@ -1,24 +1,30 @@
 package petto.pettobackend.model.adoptionsource.post;
 
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
 import petto.pettobackend.model.animal.Animal;
+import petto.pettobackend.model.user.User;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Entity
+@Table(name = "posts")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Document(collection = "post")
 public class Post extends AdoptionSource {
 
-  private String posterId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private User poster;
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinProperty(name = "animal")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "post_animal",
+      joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
+      inverseJoinColumns = {@JoinColumn(name = "animal_id", referencedColumnName = "id")})
   private Animal animal;
 
   private String title;
@@ -27,5 +33,5 @@ public class Post extends AdoptionSource {
 
   private String validity; // TODO: investigate best object type for validity
 
-  private Timestamp creationDate;
+  private Timestamp creationDate = new Timestamp(System.currentTimeMillis());
 }

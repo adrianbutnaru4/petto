@@ -26,7 +26,7 @@ public class LostAndFoundPostController extends BaseController<LostAndFoundPostD
   @PostMapping(value = "/saveForPoster")
   @ResponseStatus(HttpStatus.CREATED)
   public LostAndFoundPostDto saveForPoster(
-      @RequestBody LostAndFoundPostDto dto, @RequestParam("posterId") String posterId) {
+      @RequestBody LostAndFoundPostDto dto, @RequestParam("posterId") Long posterId) {
     return getService().saveForPoster(dto, posterId);
   }
 

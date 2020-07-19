@@ -1,7 +1,7 @@
 package petto.pettobackend.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.mapper.AdoptionSourceMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
@@ -18,7 +18,7 @@ public class AdoptionSourceServiceImpl implements AdoptionSourceService {
   }
 
   @Override
-  public MongoRepository getRepository() {
+  public CrudRepository getRepository() {
     return adoptionSourceRepository;
   }
 

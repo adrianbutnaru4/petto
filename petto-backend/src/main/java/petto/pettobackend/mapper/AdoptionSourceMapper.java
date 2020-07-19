@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionSourceMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = AdoptionSourceMapperConfig.class)
 public abstract class AdoptionSourceMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract AdoptionSource mapToAdoptionSource(AdoptionSourceDto adoptionSourceDto);
 
@@ -22,12 +22,12 @@ public abstract class AdoptionSourceMapper implements AbstractMapper {
   public abstract AdoptionSourceDto mapToAdoptionSourceDto(AdoptionSource adoptionSource);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToAdoptionSource((AdoptionSourceDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToAdoptionSourceDto((AdoptionSource) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToAdoptionSourceDto((AdoptionSource) entity);
   }
 }

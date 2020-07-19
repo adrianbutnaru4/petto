@@ -63,7 +63,12 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
 
         <dependency>
@@ -75,7 +80,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <!-- Check for the most recent available version: https://projectlombok.org/changelog.html -->
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -114,17 +118,10 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
-        <!-- relmongo -->
         <dependency>
-            <groupId>io.github.kaiso.relmongo</groupId>
-            <artifactId>relmongo</artifactId>
-            <version>3.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>7.0.0.Alpha4</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

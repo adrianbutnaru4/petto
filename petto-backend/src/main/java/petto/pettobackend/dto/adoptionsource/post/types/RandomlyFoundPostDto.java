@@ -7,7 +7,9 @@ import petto.pettobackend.dto.adoptionsource.post.PostType;
 @Data
 public class RandomlyFoundPostDto extends PostDto {
 
+  private PostDto parentPost;
+
   private String randomlyFoundAnimalAddress;
 
-  private PostType type = PostType.RANDOMLY_FOUND;
+  private PostType type;
 }

@@ -1,36 +1,38 @@
 package petto.pettobackend.model.animal;
 
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
-import petto.pettobackend.model.base.BaseDocument;
+import lombok.NoArgsConstructor;
+import petto.pettobackend.model.adoptionsource.post.Post;
+import petto.pettobackend.model.base.BaseEntity;
 
-import java.sql.Blob;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Map;
 
+@Entity
+@Table(name = "animals")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Document(collection = "animal")
-public class Animal extends BaseDocument {
+public class Animal extends BaseEntity {
 
   private String name;
+
+  private String description;
 
   private AnimalRace race;
 
   private AnimalSex sex;
 
+  private String photoPath;
+
   private AnimalStatus status;
 
-  private String description;
+  @Transient private Map<String, String> characteristics;
 
-  private Map<String, Object> characteristics;
-
-  private Blob photo; // TODO: investigate what's the best object type for saving photos
-
-  private String postId;
-
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinProperty(name = "healthDetails")
-  private AnimalHealthDetails healthDetails;
+  @OneToOne(mappedBy = "animal")
+  private Post post;
 }

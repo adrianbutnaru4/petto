@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AdoptionSourceMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.post.types.LostAndFoundPost;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = AdoptionSourceMapperConfig.class)
 public abstract class LostAndFoundPostMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract LostAndFoundPost mapToLostAndFoundPost(LostAndFoundPostDto lostAndFoundPostDto);
 
@@ -22,12 +22,12 @@ public abstract class LostAndFoundPostMapper implements AbstractMapper {
   public abstract LostAndFoundPostDto mapToLostAndFoundPostDto(LostAndFoundPost lostAndFoundPost);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToLostAndFoundPost((LostAndFoundPostDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToLostAndFoundPostDto((LostAndFoundPost) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToLostAndFoundPostDto((LostAndFoundPost) entity);
   }
 }

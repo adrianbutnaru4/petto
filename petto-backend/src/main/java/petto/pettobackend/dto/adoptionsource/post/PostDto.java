@@ -10,15 +10,15 @@ import java.sql.Timestamp;
 @Data
 public class PostDto extends AdoptionSourceDto {
 
-  private String posterId;
+  private UserDto poster;
 
   private AnimalDto animal;
 
   private String title;
 
-  private PostStatus status = PostStatus.OPEN;
+  private PostStatus status;
 
-  private String validity; // TODO: investigate best object type for validity
+  private String validity;
 
   private Timestamp creationDate;
 }

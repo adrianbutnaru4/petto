@@ -7,13 +7,13 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.dto.user.UserDto;
 import petto.pettobackend.mapper.config.UserMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 import petto.pettobackend.model.user.User;
 
 @Mapper(config = UserMapperConfig.class)
 public abstract class UserMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract User mapToUser(UserDto userDto);
 
@@ -22,12 +22,12 @@ public abstract class UserMapper implements AbstractMapper {
   public abstract UserDto mapToUserDto(User user);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToUser((UserDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToUserDto((User) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToUserDto((User) entity);
   }
 }

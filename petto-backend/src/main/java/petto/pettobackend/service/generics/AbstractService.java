@@ -1,34 +1,37 @@
 package petto.pettobackend.service.generics;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 import petto.pettobackend.dto.base.BaseDto;
-import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
+import petto.pettobackend.exceptionhandling.exceptions.EntityNotFoundException;
 import petto.pettobackend.mapper.generics.AbstractMapper;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public interface AbstractService<
-    D extends BaseDocument, DTO extends BaseDto, ID extends Serializable> {
+    E extends BaseEntity, DTO extends BaseDto, ID extends Serializable> {
 
   @Transactional()
   default DTO save(DTO dto) {
-    D document = getMapper().mapToDocument(dto);
-    document = getRepository().save(document);
-    return getMapper().mapToDto(document);
+    E entity = getMapper().mapToEntity(dto);
+    entity = getRepository().save(entity);
+    return getMapper().mapToDto(entity);
   }
 
   default List<DTO> findAll() {
-    List<D> documents = getRepository().findAll();
-    return documents.stream().map(getMapper()::mapToDto).collect(Collectors.toList());
+    List<E> entities =
+        StreamSupport.stream(getRepository().findAll().spliterator(), false)
+            .collect(Collectors.toList());
+    return entities.stream().map(getMapper()::mapToDto).collect(Collectors.toList());
   }
 
   default DTO findById(ID id) {
-    D d = getRepository().findById(id).orElseThrow(DocumentNotFoundException::new);
-    return getMapper().mapToDto(d);
+    E entity = getRepository().findById(id).orElseThrow(EntityNotFoundException::new);
+    return getMapper().mapToDto(entity);
   }
 
   default boolean exists(ID id) {
@@ -42,11 +45,11 @@ public interface AbstractService<
         .ifPresentOrElse(
             getRepository()::delete,
             () -> {
-              throw new DocumentNotFoundException();
+              throw new EntityNotFoundException();
             });
   }
 
-  MongoRepository<D, ID> getRepository();
+  CrudRepository<E, ID> getRepository();
 
-  AbstractMapper<D, DTO> getMapper();
+  AbstractMapper<E, DTO> getMapper();
 }

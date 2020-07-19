@@ -26,7 +26,7 @@ public class RandomlyFoundPostController extends BaseController<RandomlyFoundPos
   @PostMapping(value = "/saveForPoster")
   @ResponseStatus(HttpStatus.CREATED)
   public RandomlyFoundPostDto saveForPoster(
-      @RequestBody RandomlyFoundPostDto dto, @RequestParam("posterId") String posterId) {
+      @RequestBody RandomlyFoundPostDto dto, @RequestParam("posterId") Long posterId) {
     return getService().saveForPoster(dto, posterId);
   }
 

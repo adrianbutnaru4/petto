@@ -1,11 +1,11 @@
 package petto.pettobackend.mapper.generics;
 
 import petto.pettobackend.dto.base.BaseDto;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
-public interface AbstractMapper<D extends BaseDocument, DTO extends BaseDto> {
+public interface AbstractMapper<E extends BaseEntity, DTO extends BaseDto> {
 
-  D mapToDocument(DTO dto);
+  E mapToEntity(DTO dto);
 
-  DTO mapToDto(D document);
+  DTO mapToDto(E entity);
 }

@@ -8,12 +8,12 @@ import petto.pettobackend.dto.base.BaseDto;
 import petto.pettobackend.mapper.config.AnimalMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.animal.Animal;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
 @Mapper(config = AnimalMapperConfig.class)
 public abstract class AnimalMapper implements AbstractMapper {
 
-  @InheritConfiguration(name = "mapToBaseDocument")
+  @InheritConfiguration(name = "mapToBaseEntity")
   @Mappings({})
   public abstract Animal mapToAnimal(AnimalDto animalDto);
 
@@ -22,12 +22,12 @@ public abstract class AnimalMapper implements AbstractMapper {
   public abstract AnimalDto mapToAnimalDto(Animal animal);
 
   @Override
-  public BaseDocument mapToDocument(BaseDto dto) {
+  public BaseEntity mapToEntity(BaseDto dto) {
     return mapToAnimal((AnimalDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseDocument document) {
-    return mapToAnimalDto((Animal) document);
+  public BaseDto mapToDto(BaseEntity entity) {
+    return mapToAnimalDto((Animal) entity);
   }
 }

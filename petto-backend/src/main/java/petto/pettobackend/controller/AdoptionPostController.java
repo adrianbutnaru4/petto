@@ -27,7 +27,7 @@ public class AdoptionPostController extends BaseController<AdoptionPostDto, Stri
   @PostMapping(value = "/saveForPoster")
   @ResponseStatus(HttpStatus.CREATED)
   public AdoptionPostDto saveForPoster(
-      @RequestBody AdoptionPostDto dto, @RequestParam("posterId") String posterId) {
+      @RequestBody AdoptionPostDto dto, @RequestParam("posterId") Long posterId) {
     return getService().saveForPoster(dto, posterId);
   }
 

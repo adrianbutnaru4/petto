@@ -8,9 +8,11 @@ import petto.pettobackend.dto.user.UserDto;
 @Data
 public class LostAndFoundPostDto extends PostDto {
 
+  private PostDto parentPost;
+
   private UserDto recoverer;
 
   private String lostAnimalAddress;
 
-  private PostType type = PostType.LOST_AND_FOUND;
+  private PostType type;
 }

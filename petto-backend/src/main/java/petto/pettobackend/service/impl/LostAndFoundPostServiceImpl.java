@@ -1,10 +1,11 @@
 package petto.pettobackend.service.impl;
 
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import petto.pettobackend.dto.adoptionsource.post.types.LostAndFoundPostDto;
-import petto.pettobackend.exceptionhandling.exceptions.DocumentNotFoundException;
+import petto.pettobackend.dto.user.UserDto;
+import petto.pettobackend.exceptionhandling.exceptions.EntityNotFoundException;
 import petto.pettobackend.mapper.LostAndFoundPostMapper;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.repository.LostAndFoundPostRepository;
@@ -24,17 +25,19 @@ public class LostAndFoundPostServiceImpl implements LostAndFoundPostService {
   }
 
   @Override
-  public LostAndFoundPostDto saveForPoster(LostAndFoundPostDto lostAndFoundPostDto, String posterId) {
+  public LostAndFoundPostDto saveForPoster(
+      LostAndFoundPostDto lostAndFoundPostDto, Long posterId) {
     if (userService.exists(posterId)) {
-      lostAndFoundPostDto.setPosterId(posterId);
+      UserDto poster = (UserDto) userService.findById(posterId);
+      lostAndFoundPostDto.setPoster(poster);
       return (LostAndFoundPostDto) save(lostAndFoundPostDto);
     } else {
-      throw new DocumentNotFoundException();
+      throw new EntityNotFoundException();
     }
   }
 
   @Override
-  public MongoRepository getRepository() {
+  public CrudRepository getRepository() {
     return lostAndFoundPostRepository;
   }
 

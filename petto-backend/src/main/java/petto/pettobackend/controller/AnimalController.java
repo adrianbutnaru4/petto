@@ -26,7 +26,7 @@ public class AnimalController extends BaseController<AnimalDto, String> {
   @PostMapping(value = "/saveForPost")
   @ResponseStatus(HttpStatus.CREATED)
   public AnimalDto saveForPost(@RequestBody AnimalDto dto, @RequestParam("postId") String postId) {
-    return getService().save(dto, postId);
+    return getService().saveForPost(dto, postId);
   }
 
   @Override

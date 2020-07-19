@@ -1,19 +1,23 @@
 package petto.pettobackend.model.user;
 
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.post.Post;
-import petto.pettobackend.model.base.BaseDocument;
+import petto.pettobackend.model.base.BaseEntity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Document(collection = "user")
-public class User extends BaseDocument {
+public class User extends BaseEntity {
 
   private String firstName;
 
@@ -21,7 +25,6 @@ public class User extends BaseDocument {
 
   private String address; // TODO: investigate appropriate map service to save address
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinProperty(name = "posts")
+  @OneToMany(mappedBy = "poster", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Post> posts;
 }
