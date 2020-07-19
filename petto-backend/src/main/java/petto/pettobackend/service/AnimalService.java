@@ -5,5 +5,5 @@ import petto.pettobackend.service.generics.AbstractService;
 
 public interface AnimalService extends AbstractService {
 
-  AnimalDto saveForPost(AnimalDto animalDto, String postId);
+  AnimalDto saveForPost(AnimalDto animalDto, Long postId);
 }

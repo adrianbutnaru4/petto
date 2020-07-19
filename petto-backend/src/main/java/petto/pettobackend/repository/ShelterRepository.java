@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import petto.pettobackend.model.adoptionsource.shelter.Shelter;
 
 @Repository
-public interface ShelterRepository extends CrudRepository<Shelter, String> {}
+public interface ShelterRepository extends CrudRepository<Shelter, Long> {}

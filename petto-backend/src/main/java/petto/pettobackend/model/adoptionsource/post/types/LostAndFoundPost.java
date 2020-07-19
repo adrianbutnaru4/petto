@@ -16,7 +16,11 @@ import javax.persistence.*;
 @Data
 public class LostAndFoundPost extends Post {
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
+
+  @OneToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "post_id", referencedColumnName = "id")
   private Post parentPost;
 
@@ -25,5 +29,6 @@ public class LostAndFoundPost extends Post {
   private String
       lostAnimalAddress; // TODO: investigate appropriate map service to save address set by poster
 
-  private PostType type = PostType.LOST_AND_FOUND_POST;
+  @Enumerated(EnumType.STRING)
+  private PostType type;
 }

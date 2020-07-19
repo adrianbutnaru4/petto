@@ -1,7 +1,6 @@
 package petto.pettobackend.mapper.config;
 
 import org.mapstruct.MapperConfig;
-import petto.pettobackend.mapper.config.base.BaseMapperConfig;
 
 @MapperConfig
-public interface AdoptionPostMapperConfig extends BaseMapperConfig {}
+public interface AdoptionPostMapperConfig extends PostMapperConfig {}

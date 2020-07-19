@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import petto.pettobackend.model.user.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {}
+public interface UserRepository extends CrudRepository<User, Long> {}

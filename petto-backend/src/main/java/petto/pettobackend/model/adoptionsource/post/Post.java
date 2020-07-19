@@ -17,21 +17,26 @@ import java.sql.Timestamp;
 @Data
 public class Post extends AdoptionSource {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
+
   @ManyToOne(fetch = FetchType.LAZY)
   private User poster;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinTable(
       name = "post_animal",
-      joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
-      inverseJoinColumns = {@JoinColumn(name = "animal_id", referencedColumnName = "id")})
+      joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
+      inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
   private Animal animal;
 
   private String title;
 
-  private PostStatus status = PostStatus.OPEN;
+  @Enumerated(EnumType.STRING)
+  private PostStatus status;
 
   private String validity; // TODO: investigate best object type for validity
 
-  private Timestamp creationDate = new Timestamp(System.currentTimeMillis());
+  private Timestamp creationDate;
 }

@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.post.Post;
 import petto.pettobackend.model.base.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Map;
 
 @Entity
@@ -19,16 +16,23 @@ import java.util.Map;
 @Data
 public class Animal extends BaseEntity {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
+
   private String name;
 
   private String description;
 
+  @Enumerated(EnumType.STRING)
   private AnimalRace race;
 
+  @Enumerated(EnumType.STRING)
   private AnimalSex sex;
 
   private String photoPath;
 
+  @Enumerated(EnumType.STRING)
   private AnimalStatus status;
 
   @Transient private Map<String, String> characteristics;

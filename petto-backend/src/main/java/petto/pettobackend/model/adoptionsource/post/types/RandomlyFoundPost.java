@@ -15,7 +15,11 @@ import javax.persistence.*;
 @Data
 public class RandomlyFoundPost extends Post {
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
+
+  @OneToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "post_id", referencedColumnName = "id")
   private Post parentPost;
 
@@ -23,5 +27,6 @@ public class RandomlyFoundPost extends Post {
       randomlyFoundAnimalAddress; // TODO: investigate appropriate map service to save address set
   // by poster
 
-  private PostType type = PostType.RANDOMLY_FOUND_POST;
+  @Enumerated(EnumType.STRING)
+  private PostType type;
 }

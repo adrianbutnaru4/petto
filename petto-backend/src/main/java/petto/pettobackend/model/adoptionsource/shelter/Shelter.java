@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import petto.pettobackend.model.adoptionsource.AdoptionSource;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "shelters")
@@ -14,6 +13,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Data
 public class Shelter extends AdoptionSource {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
 
   private String name;
 

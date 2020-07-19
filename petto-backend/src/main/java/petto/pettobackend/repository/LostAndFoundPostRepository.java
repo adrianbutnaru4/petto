@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import petto.pettobackend.model.adoptionsource.post.types.LostAndFoundPost;
 
 @Repository
-public interface LostAndFoundPostRepository extends CrudRepository<LostAndFoundPost, String> {}
+public interface LostAndFoundPostRepository extends CrudRepository<LostAndFoundPost, Long> {}

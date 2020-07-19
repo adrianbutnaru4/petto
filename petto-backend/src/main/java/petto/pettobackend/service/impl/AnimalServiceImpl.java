@@ -26,7 +26,7 @@ public class AnimalServiceImpl implements AnimalService {
   }
 
   @Override
-  public AnimalDto saveForPost(AnimalDto animalDto, String postId) {
+  public AnimalDto saveForPost(AnimalDto animalDto, Long postId) {
     if (adoptionSourceService.exists(postId)) {
       AdoptionSourceDto post = (AdoptionSourceDto) adoptionSourceService.findById(postId);
       animalDto.setPost((PostDto) post);

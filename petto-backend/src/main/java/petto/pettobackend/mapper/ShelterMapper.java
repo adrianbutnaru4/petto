@@ -5,12 +5,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import petto.pettobackend.dto.adoptionsource.shelter.ShelterDto;
 import petto.pettobackend.dto.base.BaseDto;
-import petto.pettobackend.mapper.config.AdoptionSourceMapperConfig;
+import petto.pettobackend.mapper.config.ShelterMapperConfig;
 import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.model.adoptionsource.shelter.Shelter;
 import petto.pettobackend.model.base.BaseEntity;
 
-@Mapper(config = AdoptionSourceMapperConfig.class)
+@Mapper(config = ShelterMapperConfig.class)
 public abstract class ShelterMapper implements AbstractMapper {
 
   @InheritConfiguration(name = "mapToBaseEntity")

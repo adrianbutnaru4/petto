@@ -16,7 +16,11 @@ import javax.persistence.*;
 @Data
 public class AdoptionPost extends Post {
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private long id;
+
+  @OneToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "post_id", referencedColumnName = "id")
   private Post parentPost;
 
@@ -26,5 +30,6 @@ public class AdoptionPost extends Post {
       adoptionAddress; // TODO: investigate appropriate map service to save the address (might be
   // the same as the user address or a part of it, e.g. the city)
 
-  private PostType type = PostType.ADOPTION_POST;
+  @Enumerated(EnumType.STRING)
+  private PostType type;
 }
