@@ -1,13 +1,10 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.post.types.LostAndFoundPostDto;
-import petto.pettobackend.mapper.LostAndFoundPostMapper;
-import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.service.LostAndFoundPostService;
 
 @Slf4j
@@ -33,10 +30,5 @@ public class LostAndFoundPostController extends BaseController<LostAndFoundPostD
   @Override
   public LostAndFoundPostService getService() {
     return lostAndFoundPostService;
-  }
-
-  @Override
-  public AbstractMapper getMapper() {
-    return Mappers.getMapper(LostAndFoundPostMapper.class);
   }
 }

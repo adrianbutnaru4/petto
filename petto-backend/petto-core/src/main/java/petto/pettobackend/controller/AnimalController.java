@@ -1,13 +1,10 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.animal.AnimalDto;
-import petto.pettobackend.mapper.AnimalMapper;
-import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.service.AnimalService;
 
 @Slf4j
@@ -32,10 +29,5 @@ public class AnimalController extends BaseController<AnimalDto, Long> {
   @Override
   public AnimalService getService() {
     return animalService;
-  }
-
-  @Override
-  public AbstractMapper getMapper() {
-    return Mappers.getMapper(AnimalMapper.class);
   }
 }

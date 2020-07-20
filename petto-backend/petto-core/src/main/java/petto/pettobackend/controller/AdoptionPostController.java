@@ -1,13 +1,10 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.post.types.AdoptionPostDto;
-import petto.pettobackend.mapper.AdoptionPostMapper;
-import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.service.AdoptionPostService;
 
 @Slf4j
@@ -33,10 +30,5 @@ public class AdoptionPostController extends BaseController<AdoptionPostDto, Long
   @Override
   public AdoptionPostService getService() {
     return adoptionPostService;
-  }
-
-  @Override
-  public AbstractMapper getMapper() {
-    return Mappers.getMapper(AdoptionPostMapper.class);
   }
 }

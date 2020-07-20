@@ -1,13 +1,10 @@
 package petto.pettobackend.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import petto.pettobackend.controller.generics.BaseController;
 import petto.pettobackend.dto.adoptionsource.post.types.RandomlyFoundPostDto;
-import petto.pettobackend.mapper.RandomlyFoundPostMapper;
-import petto.pettobackend.mapper.generics.AbstractMapper;
 import petto.pettobackend.service.RandomlyFoundPostService;
 
 @Slf4j
@@ -33,10 +30,5 @@ public class RandomlyFoundPostController extends BaseController<RandomlyFoundPos
   @Override
   public RandomlyFoundPostService getService() {
     return randomlyFoundPostService;
-  }
-
-  @Override
-  public AbstractMapper getMapper() {
-    return Mappers.getMapper(RandomlyFoundPostMapper.class);
   }
 }

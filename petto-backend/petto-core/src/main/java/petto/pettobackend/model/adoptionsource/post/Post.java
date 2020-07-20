@@ -10,7 +10,7 @@ import petto.pettobackend.model.user.User;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "post")
 @Table(name = "posts")
 @AllArgsConstructor
 @NoArgsConstructor
