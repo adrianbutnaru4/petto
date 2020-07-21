@@ -20,6 +20,8 @@
     <modules>
         <module>auth</module>
         <module>core</module>
+        <module>gateway</module>
+        <module>posting</module>
     </modules>
 
     <dependencies>
