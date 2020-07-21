@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PettoBackendApplication {
+public class PettoCoreApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(PettoBackendApplication.class, args);
+    SpringApplication.run(PettoCoreApplication.class, args);
   }
 }
