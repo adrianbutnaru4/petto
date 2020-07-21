@@ -18,8 +18,8 @@
     <name>petto-backend</name>
 
     <modules>
-        <module>petto-auth</module>
-        <module>petto-core</module>
+        <module>auth</module>
+        <module>core</module>
     </modules>
 
     <dependencies>
