@@ -1,0 +1,37 @@
+server:
+  port: 8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8061/eureka/
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: petto-core-service
+          uri: lb://petto-core-service
+          predicates:
+            - Path=/core/**
+          filters:
+            - RewritePath=/core/(?<path>.*), /$\{path}
+        - id: petto-posting-service
+          uri: lb://petto-posting-service
+          predicates:
+            - Path=/posting/**
+          filters:
+            - RewritePath=/posting/(?<path>.*), /$\{path}
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
