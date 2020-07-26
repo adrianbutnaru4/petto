@@ -33,5 +33,6 @@ public class Post extends BaseEntity {
 
   private Timestamp creationDate;
 
+  @ElementCollection
   private Map<String, Serializable> fields;
 }

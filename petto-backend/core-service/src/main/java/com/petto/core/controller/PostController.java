@@ -3,7 +3,7 @@ package com.petto.core.controller;
 import com.petto.core.client.PettoPostingClient;
 import com.petto.core.controller.generics.BaseController;
 import com.petto.core.dto.adoptionsource.post.PostDto;
-import com.petto.core.service.PostService;
+import com.petto.core.service.generics.AbstractService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,11 +15,9 @@ public class PostController extends BaseController<PostDto, Long> {
 
   static final String BASE_URL = "posts";
 
-  private final PostService postService;
   private final PettoPostingClient pettoPostingClient;
 
-  public PostController(PostService postService, PettoPostingClient pettoPostingClient) {
-    this.postService = postService;
+  public PostController(PettoPostingClient pettoPostingClient) {
     this.pettoPostingClient = pettoPostingClient;
   }
 
@@ -29,7 +27,7 @@ public class PostController extends BaseController<PostDto, Long> {
   }
 
   @Override
-  public PostService getService() {
-    return postService;
+  public AbstractService getService() {
+    return null;
   }
 }
