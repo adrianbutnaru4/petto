@@ -1,13 +1,15 @@
-package com.petto.core.dto.user;
+package com.petto.auth.model;
 
-import com.petto.core.dto.adoptionsource.post.PostDto;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.petto.core.dto.base.BaseDto;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
-public class UserDto extends BaseDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDto {
+
+  private long id;
 
   private String firstName;
 
@@ -18,6 +20,4 @@ public class UserDto extends BaseDto {
   private String password;
 
   private String address; // TODO: investigate appropriate map service to save address
-
-  private List<PostDto> posts;
 }

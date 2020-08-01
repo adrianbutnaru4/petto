@@ -1,5 +1,6 @@
 package com.petto.core.service.impl;
 
+import com.petto.core.dto.user.UserDto;
 import com.petto.core.mapper.UserMapper;
 import com.petto.core.repository.UserRepository;
 import org.mapstruct.factory.Mappers;
@@ -15,6 +16,11 @@ public class UserServiceImpl implements UserService {
 
   public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
+  }
+
+  @Override
+  public UserDto findByEmail(String email) {
+    return (UserDto) getMapper().mapToDto(userRepository.findByEmail(email));
   }
 
   @Override

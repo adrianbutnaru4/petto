@@ -29,3 +29,9 @@ spring:
             - Path=/posting/**
           filters:
             - RewritePath=/posting/(?<path>.*), /$\{path}
+        - id: petto-auth-service
+          uri: lb://petto-auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<path>.*), /$\{path}

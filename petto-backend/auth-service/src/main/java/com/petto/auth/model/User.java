@@ -1,6 +1,5 @@
-package com.petto.core.model.user;
+package com.petto.auth.model;
 
-import com.petto.core.model.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User extends BaseEntity {
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)

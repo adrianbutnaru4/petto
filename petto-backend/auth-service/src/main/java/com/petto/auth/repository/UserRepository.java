@@ -1,6 +1,6 @@
-package com.petto.core.repository;
+package com.petto.auth.repository;
 
-import com.petto.core.model.user.User;
+import com.petto.auth.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
