@@ -25,8 +25,8 @@ public class UserController extends BaseController<UserDto, Long> {
     this.userService = userService;
   }
 
-  @GetMapping("/find")
-  public UserDto findById(@PathVariable("email") String email) {
+  @GetMapping("/findByEmail/{email}")
+  public UserDto findByEmail(@PathVariable("email") String email) {
     try {
       return userService.findByEmail(email);
     } catch (EntityNotFoundException e) {

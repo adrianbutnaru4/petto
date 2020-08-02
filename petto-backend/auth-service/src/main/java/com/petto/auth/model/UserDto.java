@@ -19,5 +19,5 @@ public class UserDto {
 
   private String password;
 
-  private String address; // TODO: investigate appropriate map service to save address
+  private String address;
 }
