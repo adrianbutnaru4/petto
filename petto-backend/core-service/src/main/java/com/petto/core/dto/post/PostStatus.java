@@ -1,4 +1,4 @@
-package com.petto.posting.dto;
+package com.petto.core.dto.post;
 
 public enum PostStatus {
   OPEN,

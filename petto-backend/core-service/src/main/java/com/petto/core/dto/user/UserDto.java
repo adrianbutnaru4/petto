@@ -1,6 +1,6 @@
 package com.petto.core.dto.user;
 
-import com.petto.core.dto.adoptionsource.post.PostDto;
+import com.petto.core.dto.post.PostDto;
 import lombok.Data;
 import com.petto.core.dto.base.BaseDto;
 

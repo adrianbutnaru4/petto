@@ -1,5 +1,9 @@
 package com.petto.core.service;
 
-import com.petto.core.service.generics.AbstractService;
+import com.petto.core.dto.base.BaseDto;
+import com.petto.core.dto.post.PostDto;
 
-public interface PostService extends AbstractService {}
+public interface PostService {
+
+  BaseDto getCustomPostDto(PostDto postDto);
+}

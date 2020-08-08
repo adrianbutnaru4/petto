@@ -19,11 +19,11 @@ public class Post extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
-  private long id;
+  private Long id;
 
   private Long posterId;
 
-  private String applicationName;
+  private String status;
 
   private String type;
 

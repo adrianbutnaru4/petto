@@ -1,4 +1,4 @@
-package com.petto.posting.dto;
+package com.petto.posting.dto.post;
 
 import com.petto.posting.dto.base.BaseDto;
 import lombok.Data;
@@ -11,8 +11,6 @@ import java.util.Map;
 public class PostDto extends BaseDto {
 
   private Long posterId;
-
-  private String applicationName;
 
   private PostStatus status;
 

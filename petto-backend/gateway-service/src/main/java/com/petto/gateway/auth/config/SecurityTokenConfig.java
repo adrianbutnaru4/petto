@@ -43,6 +43,7 @@ public class SecurityTokenConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers("/auth/**").permitAll()
+                .pathMatchers("/actuator/**").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }

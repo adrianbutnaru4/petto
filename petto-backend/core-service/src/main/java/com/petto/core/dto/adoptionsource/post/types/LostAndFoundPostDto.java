@@ -1,13 +1,10 @@
 package com.petto.core.dto.adoptionsource.post.types;
 
-import com.petto.core.dto.adoptionsource.post.PostDto;
-import com.petto.core.dto.adoptionsource.post.PostType;
+import com.petto.core.dto.adoptionsource.post.BasePostDto;
 import lombok.Data;
 
 @Data
-public class LostAndFoundPostDto extends PostDto {
-
-  private Long parentPostId;
+public class LostAndFoundPostDto extends BasePostDto {
 
   private Long animalId;
 

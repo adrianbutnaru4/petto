@@ -1,7 +1,7 @@
 package com.petto.posting.mapper;
 
 import com.petto.posting.dto.base.BaseDto;
-import com.petto.posting.dto.PostDto;
+import com.petto.posting.dto.post.PostDto;
 import com.petto.posting.mapper.config.PostMapperConfig;
 import com.petto.posting.mapper.generics.AbstractMapper;
 import com.petto.posting.model.base.BaseEntity;

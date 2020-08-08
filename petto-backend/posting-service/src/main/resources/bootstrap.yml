@@ -18,3 +18,8 @@ spring:
 server:
   error:
     include-messages: always
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 160000000

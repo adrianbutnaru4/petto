@@ -1,6 +1,6 @@
 package com.petto.core.dto.animal;
 
-import com.petto.core.dto.adoptionsource.post.PostDto;
+import com.petto.core.dto.post.PostDto;
 import com.petto.core.dto.base.BaseDto;
 import lombok.Data;
 
