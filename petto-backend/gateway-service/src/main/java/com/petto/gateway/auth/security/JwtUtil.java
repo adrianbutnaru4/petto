@@ -16,42 +16,42 @@ import java.util.Date;
 @Data
 public class JwtUtil {
 
-    @Value("${security.jwt.uri:/auth/**}")
-    private String Uri;
+  @Value("${security.jwt.uri:/auth/**}")
+  private String Uri;
 
-    @Value("${security.jwt.header:Authorization}")
-    private String header;
+  @Value("${security.jwt.header:Authorization}")
+  private String header;
 
-    @Value("${security.jwt.prefix:Bearer }")
-    private String prefix;
+  @Value("${security.jwt.prefix:Bearer }")
+  private String prefix;
 
-    @Value("${security.jwt.expiration:#{24*60*60}}")
-    private int expiration;
+  @Value("${security.jwt.expiration:#{24*60*60}}")
+  private int expiration;
 
-    @Value("${security.jwt.secret:JwtSecretKeyUsedForPettoApplication}")
-    private String secret;
+  @Value("${security.jwt.secret:JwtSecretKeyUsedForPettoApplication}")
+  private String secret;
 
-    private Key key;
+  private Key key;
 
-    @PostConstruct
-    public void init(){
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
-    }
+  @PostConstruct
+  public void init() {
+    this.key = Keys.hmacShaKeyFor(secret.getBytes());
+  }
 
-    public Boolean validateToken(String token) {
-        return !isTokenExpired(token);
-    }
+  public Boolean validateToken(String token) {
+    return !isTokenExpired(token);
+  }
 
-    private Boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
-    }
+  private Boolean isTokenExpired(String token) {
+    final Date expiration = getExpirationDateFromToken(token);
+    return expiration.before(new Date());
+  }
 
-    public Date getExpirationDateFromToken(String token) {
-        return getAllClaimsFromToken(token).getExpiration();
-    }
+  public Date getExpirationDateFromToken(String token) {
+    return getAllClaimsFromToken(token).getExpiration();
+  }
 
-    public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-    }
+  public Claims getAllClaimsFromToken(String token) {
+    return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+  }
 }

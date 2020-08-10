@@ -15,25 +15,24 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired private AuthenticationManager authenticationManager;
 
-    @Override
-    public Mono<Void> save(ServerWebExchange swe, SecurityContext sc) {
-        throw new UnsupportedOperationException("Not supported yet.");
+  @Override
+  public Mono<Void> save(ServerWebExchange swe, SecurityContext sc) {
+    throw new UnsupportedOperationException("Not supported yet.");
+  }
+
+  @Override
+  public Mono<SecurityContext> load(ServerWebExchange swe) {
+    ServerHttpRequest request = swe.getRequest();
+    String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+      String authToken = authHeader.substring(7);
+      Authentication auth = new UsernamePasswordAuthenticationToken(authToken, authToken);
+      return this.authenticationManager.authenticate(auth).map(SecurityContextImpl::new);
+    } else {
+      return Mono.empty();
     }
-
-    @Override
-    public Mono<SecurityContext> load(ServerWebExchange swe) {
-        ServerHttpRequest request = swe.getRequest();
-        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String authToken = authHeader.substring(7);
-            Authentication auth = new UsernamePasswordAuthenticationToken(authToken, authToken);
-            return this.authenticationManager.authenticate(auth).map(SecurityContextImpl::new);
-        } else {
-            return Mono.empty();
-        }
-    }
+  }
 }

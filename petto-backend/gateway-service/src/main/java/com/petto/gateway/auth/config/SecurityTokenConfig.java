@@ -16,36 +16,42 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 public class SecurityTokenConfig {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Autowired private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private SecurityContextRepository securityContextRepository;
+  @Autowired private SecurityContextRepository securityContextRepository;
 
-    @Bean
-    public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
-        return http
-                .exceptionHandling()
-                .authenticationEntryPoint((swe, e) -> {
-                    return Mono.fromRunnable(() -> {
-                        swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    });
-                }).accessDeniedHandler((swe, e) -> {
-                    return Mono.fromRunnable(() -> {
-                        swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-                    });
-                }).and()
-                .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .authenticationManager(authenticationManager)
-                .securityContextRepository(securityContextRepository)
-                .authorizeExchange()
-                .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/auth/**").permitAll()
-                .pathMatchers("/actuator/**").permitAll()
-                .anyExchange().authenticated()
-                .and().build();
-    }
-
+  @Bean
+  public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
+    return http.exceptionHandling()
+        .authenticationEntryPoint(
+            (swe, e) -> Mono.fromRunnable(
+                () -> {
+                  swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                }))
+        .accessDeniedHandler(
+            (swe, e) -> Mono.fromRunnable(
+                () -> {
+                  swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                }))
+        .and()
+        .csrf()
+        .disable()
+        .formLogin()
+        .disable()
+        .httpBasic()
+        .disable()
+        .authenticationManager(authenticationManager)
+        .securityContextRepository(securityContextRepository)
+        .authorizeExchange()
+        .pathMatchers(HttpMethod.OPTIONS)
+        .permitAll()
+        .pathMatchers("/auth/**")
+        .permitAll()
+        .pathMatchers("/actuator/**")
+        .permitAll()
+        .anyExchange()
+        .authenticated()
+        .and()
+        .build();
+  }
 }

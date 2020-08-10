@@ -17,27 +17,28 @@ import java.util.Optional;
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+  @Autowired private JwtUtil jwtUtil;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Mono<Authentication> authenticate(Authentication authentication) {
-        String authToken = authentication.getCredentials().toString();
+  @Override
+  @SuppressWarnings("unchecked")
+  public Mono<Authentication> authenticate(Authentication authentication) {
+    String authToken = authentication.getCredentials().toString();
 
-        try {
-            if (!jwtUtil.validateToken(authToken)) {
-                return Mono.empty();
-            }
-            Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
-            List<String> rolesMap = Optional.ofNullable(claims.get("role", List.class)).orElseGet(ArrayList::new);
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            for (String rolemap : rolesMap) {
-                authorities.add(new SimpleGrantedAuthority(rolemap));
-            }
-            return Mono.just(new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities));
-        } catch (Exception e) {
-            return Mono.empty();
-        }
+    try {
+      if (!jwtUtil.validateToken(authToken)) {
+        return Mono.empty();
+      }
+      Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
+      List<String> rolesMap =
+          Optional.ofNullable(claims.get("role", List.class)).orElseGet(ArrayList::new);
+      List<GrantedAuthority> authorities = new ArrayList<>();
+      for (String rolemap : rolesMap) {
+        authorities.add(new SimpleGrantedAuthority(rolemap));
+      }
+      return Mono.just(
+          new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities));
+    } catch (Exception e) {
+      return Mono.empty();
     }
+  }
 }
