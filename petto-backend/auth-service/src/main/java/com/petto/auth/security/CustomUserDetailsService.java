@@ -12,15 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private PettoUserClient pettoUserClient;
+  @Autowired private PettoUserClient pettoUserClient;
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
-        UserDto user = pettoUserClient.findByEmail(email);
+  @Override
+  @Transactional
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserDto user = pettoUserClient.findByEmail(email);
 
-        return UserPrincipal.create(user);
-    }
+    return UserPrincipal.create(user);
+  }
 }
