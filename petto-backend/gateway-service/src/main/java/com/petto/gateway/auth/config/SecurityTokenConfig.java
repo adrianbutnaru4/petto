@@ -45,7 +45,7 @@ public class SecurityTokenConfig {
         .authorizeExchange()
         .pathMatchers(HttpMethod.OPTIONS)
         .permitAll()
-        .pathMatchers("/auth/**")
+        .pathMatchers("/auth/login", "/auth/registration/signup")
         .permitAll()
         .pathMatchers("/actuator/**")
         .permitAll()

@@ -4,6 +4,7 @@ import com.petto.auth.model.JwtConfig;
 import com.petto.auth.security.CustomUserDetailsService;
 import com.petto.auth.security.JwtUsernameAndPasswordAuthenticationFilter;
 import com.petto.auth.security.PettoAuthenticationEntryPoint;
+import com.petto.auth.security.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -47,6 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public TokenAuthenticationFilter tokenAuthenticationFilter() {
+    return new TokenAuthenticationFilter();
   }
 
   @Override
@@ -88,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.css",
             "/**/*.js")
         .permitAll()
-        .antMatchers("/login", "/oauth2/**")
+        .antMatchers("/login", "/oauth2/**", "/registration/**")
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -111,10 +118,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .logout()
         .logoutUrl("/logout")
         .invalidateHttpSession(true)
-        .logoutSuccessUrl("/login")
+        // .logoutSuccessUrl("/login")
         .deleteCookies("JSESSIONID")
         .and()
         .exceptionHandling()
         .accessDeniedPage("/403");
+
+    http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 }

@@ -5,11 +5,13 @@ import com.petto.auth.model.JwtConfig;
 import com.petto.auth.model.LoginRequest;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -18,54 +20,80 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtUsernameAndPasswordAuthenticationFilter
+    extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authManager;
+  private static final String REDIS_SET_ACTIVE_SUBJECTS = "active-subjects";
 
-    private final JwtConfig jwtConfig;
+  private final AuthenticationManager authManager;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig) {
-        this.authManager = authManager;
-        this.jwtConfig = jwtConfig;
+  private final JwtConfig jwtConfig;
 
-        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
+  public JwtUsernameAndPasswordAuthenticationFilter(
+      AuthenticationManager authManager, JwtConfig jwtConfig) {
+    this.authManager = authManager;
+    this.jwtConfig = jwtConfig;
+
+    this.setRequiresAuthenticationRequestMatcher(
+        new AntPathRequestMatcher(jwtConfig.getUri(), "POST"));
+  }
+
+  @Override
+  public Authentication attemptAuthentication(
+      HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
+    try {
+
+      LoginRequest creds =
+          new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+
+      UsernamePasswordAuthenticationToken authToken =
+          new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword());
+
+      return authManager.authenticate(authToken);
+
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
+  }
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
+  @Override
+  protected void successfulAuthentication(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      FilterChain chain,
+      Authentication auth)
+      throws IOException, ServletException {
 
-        try {
+    UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
 
-            LoginRequest creds = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+    String token =
+        this.generateJwt(
+            Long.toString(principal.getId()),
+            auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
 
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    creds.getUsername(), creds.getPassword());
+    // RedisUtil.INSTANCE.sadd(REDIS_SET_ACTIVE_SUBJECTS, auth.getName());
 
-            return authManager.authenticate(authToken);
+    SecurityContextHolder.getContext().setAuthentication(auth);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+  }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-        long now = System.currentTimeMillis();
-        String token = Jwts.builder()
-                .setSubject(auth.getName())
-                .claim("authorities", auth.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000))  // in milliseconds
-                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret().getBytes())
-                .compact();
-
-        response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
-    }
-
+  private String generateJwt(String subject, List<String> roles) {
+    long now = System.currentTimeMillis();
+    return Jwts.builder()
+        .setSubject(subject)
+        .claim("authorities", roles)
+        .setIssuedAt(new Date(now))
+        .setExpiration(new Date(now + jwtConfig.getExpiration() * 1000)) // in milliseconds
+        .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret().getBytes())
+        .compact();
+  }
 }
