@@ -24,15 +24,17 @@ public class SecurityTokenConfig {
   public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
     return http.exceptionHandling()
         .authenticationEntryPoint(
-            (swe, e) -> Mono.fromRunnable(
-                () -> {
-                  swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                }))
+            (swe, e) ->
+                Mono.fromRunnable(
+                    () -> {
+                      swe.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    }))
         .accessDeniedHandler(
-            (swe, e) -> Mono.fromRunnable(
-                () -> {
-                  swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-                }))
+            (swe, e) ->
+                Mono.fromRunnable(
+                    () -> {
+                      swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+                    }))
         .and()
         .csrf()
         .disable()
