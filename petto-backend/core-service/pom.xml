@@ -19,6 +19,7 @@
         <jackson.version>2.11.1</jackson.version>
         <lombok.version>1.18.12</lombok.version>
         <mapstruct.version>1.4.0.Beta2</mapstruct.version>
+        <springdoc.version>1.4.4</springdoc.version>
     </properties>
 
     <dependencies>
@@ -84,10 +85,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
+
+        <!-- springdoc ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webmvc-core</artifactId>
-            <version>1.2.32</version>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- Lombok -->

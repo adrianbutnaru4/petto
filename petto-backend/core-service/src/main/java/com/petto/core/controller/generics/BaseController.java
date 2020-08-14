@@ -2,57 +2,73 @@ package com.petto.core.controller.generics;
 
 import com.petto.core.dto.base.BaseDto;
 import com.petto.core.exceptionhandling.exceptions.EntityNotFoundException;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.Serializable;
 import java.util.List;
 
-// TODO: validate path variables and request bodies
+// TODO: add validation
 public abstract class BaseController<DTO extends BaseDto, ID extends Serializable>
     implements AbstractController<DTO, ID> {
 
   // TODO: add pagination
+  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "get all")})
   @GetMapping("/findAll")
   public List<DTO> findAll() {
     return getService().findAll();
   }
 
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "get by id"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
   @GetMapping("{id}")
-  public DTO findById(@PathVariable("id") ID id) {
+  public ResponseEntity<DTO> findById(@PathVariable("id") ID id) {
     try {
-      return getService().findById(id);
+      return ResponseEntity.ok(getService().findById(id));
     } catch (EntityNotFoundException e) {
-      throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND, String.format("Entity with id '%s' was not found.", id), e);
+      return ResponseEntity.notFound().build();
     }
   }
 
+  @ApiResponses(value = {@ApiResponse(responseCode = "201", description = "create")})
   @PostMapping(value = "/save")
-  @ResponseStatus(HttpStatus.CREATED)
   public DTO save(@RequestBody DTO dto) {
     return getService().save(dto);
   }
 
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "update"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
   @PutMapping("{id}/update")
-  public DTO update(@PathVariable("id") ID id, @RequestBody DTO dto) {
+  public ResponseEntity<DTO> update(@PathVariable("id") ID id, @RequestBody DTO dto) {
     if (getService().exists(id)) {
       dto.setId((Long) id);
-      return getService().save(dto);
+      return ResponseEntity.ok(getService().save(dto));
     } else {
-      // TODO: properly handle this
-      throw new EntityNotFoundException();
+      return ResponseEntity.notFound().build();
     }
   }
 
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "delete"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
   @DeleteMapping("{id}/delete")
-  public void delete(@PathVariable("id") ID id) {
+  public ResponseEntity<Void> delete(@PathVariable("id") ID id) {
     try {
       getService().delete(id);
+      return new ResponseEntity<>(HttpStatus.OK);
     } catch (EntityNotFoundException e) {
-      throw new ResponseStatusException(
-          HttpStatus.NOT_FOUND, String.format("Entity with id '%s' was not found.", id), e);
+      return ResponseEntity.notFound().build();
     }
   }
 }

@@ -1,6 +1,5 @@
 server:
   port: 8060
-
 eureka:
   client:
     serviceUrl:
@@ -9,12 +8,6 @@ eureka:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
-
-com:
-  petto:
-    swagger2:
-      gateway:
-        enabled: true
 
 management:
   endpoints:

@@ -81,18 +81,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- OpenAPI 3 -->
+        <!-- springdoc ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webflux-ui</artifactId>
             <version>${springdoc.version}</version>
-        </dependency>
-
-        <!-- Swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-spring-webflux</artifactId>
-            <version>3.0.0</version>
         </dependency>
 
         <!-- Lombok -->
