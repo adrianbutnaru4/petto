@@ -21,4 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     return UserPrincipal.create(user);
   }
+
+  @Transactional
+  public UserDetails loadUserById(Long id) {
+    UserDto user = pettoUserClient.findById(id);
+
+    return UserPrincipal.create(user);
+  }
 }
