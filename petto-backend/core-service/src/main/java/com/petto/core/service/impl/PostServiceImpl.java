@@ -1,6 +1,6 @@
 package com.petto.core.service.impl;
 
-import com.petto.core.dto.base.BaseDto;
+import com.petto.core.dto.adoptionsource.post.BasePostDto;
 import com.petto.core.dto.post.PostDto;
 import com.petto.core.mapper.PostMapper;
 import com.petto.core.service.PostService;
@@ -13,7 +13,7 @@ public class PostServiceImpl implements PostService {
   private final PostMapper MAPPER = Mappers.getMapper(PostMapper.class);
 
   @Override
-  public BaseDto getCustomPostDto(PostDto postDto) {
+  public BasePostDto getCustomPostDto(PostDto postDto) {
     return MAPPER.mapToCustomPostDto(postDto);
   }
 }

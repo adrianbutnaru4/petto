@@ -1,12 +1,11 @@
 package com.petto.core.service.impl;
 
-import com.petto.core.repository.AdoptionSourceRepository;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
 import com.petto.core.mapper.AdoptionSourceMapper;
-import com.petto.core.mapper.generics.AbstractMapper;
+import com.petto.core.repository.AdoptionSourceRepository;
 import com.petto.core.service.AdoptionSourceService;
+import org.mapstruct.factory.Mappers;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AdoptionSourceServiceImpl implements AdoptionSourceService {
@@ -18,12 +17,12 @@ public class AdoptionSourceServiceImpl implements AdoptionSourceService {
   }
 
   @Override
-  public CrudRepository getRepository() {
+  public PagingAndSortingRepository getRepository() {
     return adoptionSourceRepository;
   }
 
   @Override
-  public AbstractMapper getMapper() {
+  public AdoptionSourceMapper getMapper() {
     return Mappers.getMapper(AdoptionSourceMapper.class);
   }
 }

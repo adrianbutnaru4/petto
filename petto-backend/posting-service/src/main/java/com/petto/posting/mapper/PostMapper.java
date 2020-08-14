@@ -4,8 +4,8 @@ import com.petto.posting.dto.base.BaseDto;
 import com.petto.posting.dto.post.PostDto;
 import com.petto.posting.mapper.config.PostMapperConfig;
 import com.petto.posting.mapper.generics.AbstractMapper;
-import com.petto.posting.model.base.BaseEntity;
 import com.petto.posting.model.Post;
+import com.petto.posting.model.base.BaseEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
@@ -22,12 +22,12 @@ public abstract class PostMapper implements AbstractMapper {
   public abstract PostDto mapToPostDto(Post post);
 
   @Override
-  public BaseEntity mapToEntity(BaseDto dto) {
+  public Post mapToEntity(BaseDto dto) {
     return mapToPost((PostDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseEntity entity) {
+  public PostDto mapToDto(BaseEntity entity) {
     return mapToPostDto((Post) entity);
   }
 }

@@ -22,12 +22,12 @@ public abstract class ShelterMapper implements AbstractMapper {
   public abstract ShelterDto mapToShelterDto(Shelter shelter);
 
   @Override
-  public BaseEntity mapToEntity(BaseDto dto) {
+  public Shelter mapToEntity(BaseDto dto) {
     return mapToShelter((ShelterDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseEntity entity) {
+  public ShelterDto mapToDto(BaseEntity entity) {
     return mapToShelterDto((Shelter) entity);
   }
 }

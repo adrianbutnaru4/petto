@@ -4,7 +4,7 @@ import com.petto.posting.dto.base.BaseDto;
 import com.petto.posting.exceptions.EntityNotFoundException;
 import com.petto.posting.mapper.generics.AbstractMapper;
 import com.petto.posting.model.base.BaseEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -49,7 +49,7 @@ public interface AbstractService<
             });
   }
 
-  CrudRepository<E, ID> getRepository();
+  PagingAndSortingRepository<E, ID> getRepository();
 
   AbstractMapper<E, DTO> getMapper();
 }

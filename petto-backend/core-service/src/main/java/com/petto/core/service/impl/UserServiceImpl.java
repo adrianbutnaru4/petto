@@ -2,11 +2,10 @@ package com.petto.core.service.impl;
 
 import com.petto.core.dto.user.UserDto;
 import com.petto.core.mapper.UserMapper;
-import com.petto.core.mapper.generics.AbstractMapper;
 import com.petto.core.repository.UserRepository;
 import com.petto.core.service.UserService;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,16 +19,16 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto findByEmail(String email) {
-    return (UserDto) getMapper().mapToDto(userRepository.findByEmail(email));
+    return getMapper().mapToDto(userRepository.findByEmail(email));
   }
 
   @Override
-  public CrudRepository getRepository() {
+  public PagingAndSortingRepository getRepository() {
     return userRepository;
   }
 
   @Override
-  public AbstractMapper getMapper() {
+  public UserMapper getMapper() {
     return Mappers.getMapper(UserMapper.class);
   }
 }

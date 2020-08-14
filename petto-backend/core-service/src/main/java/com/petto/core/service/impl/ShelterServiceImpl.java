@@ -1,12 +1,11 @@
 package com.petto.core.service.impl;
 
-import com.petto.core.repository.ShelterRepository;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
 import com.petto.core.mapper.ShelterMapper;
-import com.petto.core.mapper.generics.AbstractMapper;
+import com.petto.core.repository.ShelterRepository;
 import com.petto.core.service.ShelterService;
+import org.mapstruct.factory.Mappers;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShelterServiceImpl implements ShelterService {
@@ -18,12 +17,12 @@ public class ShelterServiceImpl implements ShelterService {
   }
 
   @Override
-  public CrudRepository getRepository() {
+  public PagingAndSortingRepository getRepository() {
     return shelterRepository;
   }
 
   @Override
-  public AbstractMapper getMapper() {
+  public ShelterMapper getMapper() {
     return Mappers.getMapper(ShelterMapper.class);
   }
 }

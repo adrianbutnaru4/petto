@@ -22,12 +22,12 @@ public abstract class AdoptionSourceMapper implements AbstractMapper {
   public abstract AdoptionSourceDto mapToAdoptionSourceDto(AdoptionSource adoptionSource);
 
   @Override
-  public BaseEntity mapToEntity(BaseDto dto) {
+  public AdoptionSource mapToEntity(BaseDto dto) {
     return mapToAdoptionSource((AdoptionSourceDto) dto);
   }
 
   @Override
-  public BaseDto mapToDto(BaseEntity entity) {
+  public AdoptionSourceDto mapToDto(BaseEntity entity) {
     return mapToAdoptionSourceDto((AdoptionSource) entity);
   }
 }

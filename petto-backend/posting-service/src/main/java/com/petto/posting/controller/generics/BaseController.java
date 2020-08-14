@@ -9,11 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.Serializable;
 import java.util.List;
 
-// TODO: validate path variables and request bodies
+// TODO: add validation
 public abstract class BaseController<DTO extends BaseDto, ID extends Serializable>
     implements AbstractController<DTO, ID> {
 
-  // TODO: add pagination
   @GetMapping("/findAll")
   public List<DTO> findAll() {
     return getService().findAll();
@@ -27,12 +26,6 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
       throw new ResponseStatusException(
           HttpStatus.NOT_FOUND, String.format("Entity with id '%s' was not found.", id), e);
     }
-  }
-
-  @PostMapping(value = "/save")
-  @ResponseStatus(HttpStatus.CREATED)
-  public DTO save(@RequestBody DTO dto) {
-    return getService().save(dto);
   }
 
   @PutMapping("{id}/update")

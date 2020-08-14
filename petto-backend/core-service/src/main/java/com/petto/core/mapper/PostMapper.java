@@ -1,9 +1,9 @@
 package com.petto.core.mapper;
 
+import com.petto.core.dto.adoptionsource.post.BasePostDto;
 import com.petto.core.dto.adoptionsource.post.types.AdoptionPostDto;
 import com.petto.core.dto.adoptionsource.post.types.LostAndFoundPostDto;
 import com.petto.core.dto.adoptionsource.post.types.RandomlyFoundPostDto;
-import com.petto.core.dto.base.BaseDto;
 import com.petto.core.dto.post.PostDto;
 import com.petto.core.mapper.config.PostMapperConfig;
 import com.petto.core.mapper.generics.AbstractMapper;
@@ -40,7 +40,7 @@ public abstract class PostMapper implements AbstractMapper {
   })
   abstract RandomlyFoundPostDto mapToRandomlyFoundPostDto(PostDto postDto);
 
-  public BaseDto mapToCustomPostDto(PostDto postDto) {
+  public BasePostDto mapToCustomPostDto(PostDto postDto) {
     switch (postDto.getType()) {
       case ADOPTION_POST:
         return mapToAdoptionPostDto(postDto);
@@ -50,6 +50,7 @@ public abstract class PostMapper implements AbstractMapper {
         return mapToRandomlyFoundPostDto(postDto);
       default:
         return null;
+        // TODO: handle
     }
   }
 }
