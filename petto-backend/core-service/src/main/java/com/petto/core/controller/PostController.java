@@ -56,7 +56,7 @@ public class PostController {
       @RequestParam(name = "size") int size,
       @RequestParam(name = "sortDirection") String sortDirection,
       @RequestParam(name = "sort") String sort) {
-    LOGGER.info("find all");
+    LOGGER.info("find all by page request");
     return ResponseEntity.ok(
         Optional.ofNullable(
                 pettoPostingClient.findAllByPageRequest(page, size, sortDirection, sort).getBody())
@@ -106,7 +106,7 @@ public class PostController {
         @ApiResponse(responseCode = "200", description = "patch"),
         @ApiResponse(responseCode = "404", description = "not found")
       })
-  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
+  @PatchMapping(path = "/{id}/patch", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
   public ResponseEntity<BasePostDto> patch(
       @PathVariable Long id, @RequestBody JsonPatch patchDocument) {
     LOGGER.info("patch: id={}", id);
@@ -119,7 +119,7 @@ public class PostController {
         @ApiResponse(responseCode = "200", description = "merge patch"),
         @ApiResponse(responseCode = "404", description = "not found")
       })
-  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
+  @PatchMapping(path = "/{id}/patch", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
   public ResponseEntity<BasePostDto> patch(
       @PathVariable Long id, @RequestBody JsonMergePatch mergePatchDocument) {
     LOGGER.info("merge patch: id={}", id);
