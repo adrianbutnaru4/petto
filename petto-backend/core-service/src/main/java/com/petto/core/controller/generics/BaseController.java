@@ -39,6 +39,18 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
   }
 
   @ApiResponses(
+      value = {@ApiResponse(responseCode = "200", description = "find all by page request")})
+  @GetMapping("/findAllByPageRequest")
+  public List<DTO> findAllByPageRequest(
+      @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "sortDirection") String sortDirection,
+      @RequestParam(name = "sort") String sort) {
+    LOGGER.info("find all by page request");
+    return getService().findAllByPageRequest(page, size, sortDirection, sort);
+  }
+
+  @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "get by id"),
         @ApiResponse(responseCode = "404", description = "not found")
@@ -81,7 +93,7 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
         @ApiResponse(responseCode = "200", description = "patch"),
         @ApiResponse(responseCode = "404", description = "not found")
       })
-  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
+  @PatchMapping(path = "/{id}/patch", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
   public ResponseEntity<DTO> patch(@PathVariable ID id, @RequestBody JsonPatch patchDocument) {
     LOGGER.info("patch: id={}", id);
     try {
@@ -98,7 +110,7 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
         @ApiResponse(responseCode = "200", description = "merge patch"),
         @ApiResponse(responseCode = "404", description = "not found")
       })
-  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
+  @PatchMapping(path = "/{id}/patch", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
   public ResponseEntity<DTO> patch(
       @PathVariable ID id, @RequestBody JsonMergePatch mergePatchDocument) {
     LOGGER.info("merge patch: id={}", id);

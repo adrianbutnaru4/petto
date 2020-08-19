@@ -4,6 +4,8 @@ import com.petto.core.dto.base.BaseDto;
 import com.petto.core.exceptionhandling.exceptions.EntityNotFoundException;
 import com.petto.core.mapper.generics.AbstractMapper;
 import com.petto.core.model.base.BaseEntity;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,14 @@ public interface AbstractService<
         StreamSupport.stream(getRepository().findAll().spliterator(), false)
             .collect(Collectors.toList());
     return entities.stream().map(getMapper()::mapToDto).collect(Collectors.toList());
+  }
+
+  default List<DTO> findAllByPageRequest(int page, int size, String sortDirection, String sort) {
+    return getRepository()
+        .findAll(PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sort))
+        .getContent().stream()
+        .map(getMapper()::mapToDto)
+        .collect(Collectors.toList());
   }
 
   default DTO findById(ID id) {
