@@ -45,7 +45,8 @@ public class PettoGatewayApplication {
             routeDefinition -> {
               String name = routeDefinition.getId().replaceAll("petto-|-service", "");
               swaggerUiConfigParameters.addGroup(name);
-              groups.add(GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build());
+              groups.add(
+                  GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build());
             });
     return groups;
   }

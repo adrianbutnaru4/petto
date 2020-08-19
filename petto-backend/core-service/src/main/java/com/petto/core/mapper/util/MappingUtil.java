@@ -8,6 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Map;
+import java.util.Optional;
 
 public class MappingUtil {
 
@@ -55,13 +56,13 @@ public class MappingUtil {
   public @interface RandomlyFoundAnimalAddress {}
 
   @AnimalId
-  public Integer animalId(Map<String, Serializable> in) {
-    return (Integer) in.get(ANIMAL_ID);
+  public Long animalId(Map<String, Serializable> in) {
+    return Optional.ofNullable((Number) in.get(ANIMAL_ID)).map(Number::longValue).orElse(null);
   }
 
   @AdopterId
-  public Integer adopterId(Map<String, Serializable> in) {
-    return (Integer) in.get(ADOPTER_ID);
+  public Long adopterId(Map<String, Serializable> in) {
+    return Optional.ofNullable((Number) in.get(ADOPTER_ID)).map(Number::longValue).orElse(null);
   }
 
   @AdoptionAddress
@@ -70,8 +71,8 @@ public class MappingUtil {
   }
 
   @RecovererId
-  public Integer recovererId(Map<String, Serializable> in) {
-    return (Integer) in.get(RECOVERER_ID);
+  public Long recovererId(Map<String, Serializable> in) {
+    return Optional.ofNullable((Number) in.get(RECOVERER_ID)).map(Number::longValue).orElse(null);
   }
 
   @LostAnimalAddress

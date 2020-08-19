@@ -1,6 +1,7 @@
 package com.petto.core.controller;
 
 import com.petto.core.client.PettoPostingClient;
+import com.petto.core.controller.util.PatchMediaType;
 import com.petto.core.dto.adoptionsource.post.BasePostDto;
 import com.petto.core.dto.post.PostDto;
 import com.petto.core.service.PostService;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.JsonMergePatch;
+import javax.json.JsonPatch;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +58,8 @@ public class PostController {
       @RequestParam(name = "sort") String sort) {
     LOGGER.info("find all");
     return ResponseEntity.ok(
-        Optional.ofNullable(pettoPostingClient.findAllByPageRequest(page, size, sortDirection, sort).getBody())
+        Optional.ofNullable(
+                pettoPostingClient.findAllByPageRequest(page, size, sortDirection, sort).getBody())
             .stream()
             .flatMap(Collection::stream)
             .map(postService::getCustomPostDto)
@@ -95,6 +99,32 @@ public class PostController {
     LOGGER.info("update: id={}", id);
     return ResponseEntity.ok(
         postService.getCustomPostDto(pettoPostingClient.update(id, postDto).getBody()));
+  }
+
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "patch"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
+  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
+  public ResponseEntity<BasePostDto> patch(
+      @PathVariable Long id, @RequestBody JsonPatch patchDocument) {
+    LOGGER.info("patch: id={}", id);
+    return ResponseEntity.ok(
+        postService.getCustomPostDto(pettoPostingClient.patch(id, patchDocument).getBody()));
+  }
+
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "merge patch"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
+  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
+  public ResponseEntity<BasePostDto> patch(
+      @PathVariable Long id, @RequestBody JsonMergePatch mergePatchDocument) {
+    LOGGER.info("merge patch: id={}", id);
+    return ResponseEntity.ok(
+        postService.getCustomPostDto(pettoPostingClient.patch(id, mergePatchDocument).getBody()));
   }
 
   @ApiResponses(

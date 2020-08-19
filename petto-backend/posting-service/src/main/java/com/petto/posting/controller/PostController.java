@@ -1,6 +1,7 @@
 package com.petto.posting.controller;
 
 import com.petto.posting.controller.generics.BaseController;
+import com.petto.posting.controller.util.PatchHelper;
 import com.petto.posting.dto.post.PostDto;
 import com.petto.posting.service.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,8 @@ public class PostController extends BaseController<PostDto, Long> {
 
   private final PostService postService;
 
-  public PostController(PostService postService) {
+  public PostController(PatchHelper patchHelper, PostService postService) {
+    super(PostDto.class, patchHelper);
     this.postService = postService;
   }
 
@@ -34,7 +36,7 @@ public class PostController extends BaseController<PostDto, Long> {
       @RequestParam(name = "size") int size,
       @RequestParam(name = "sortDirection") String sortDirection,
       @RequestParam(name = "sort") String sort) {
-    return getService().findAll(page, size, sortDirection, sort);
+    return getService().findAllByPageRequest(page, size, sortDirection, sort);
   }
 
   @Override

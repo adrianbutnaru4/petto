@@ -1,5 +1,7 @@
 package com.petto.core.controller.generics;
 
+import com.petto.core.controller.util.PatchHelper;
+import com.petto.core.controller.util.PatchMediaType;
 import com.petto.core.dto.base.BaseDto;
 import com.petto.core.exceptionhandling.exceptions.EntityNotFoundException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.JsonMergePatch;
+import javax.json.JsonPatch;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +22,14 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
     implements AbstractController<DTO, ID> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+
+  private final Class<DTO> type;
+  private final PatchHelper patchHelper;
+
+  public BaseController(Class<DTO> type, PatchHelper patchHelper) {
+    this.type = type;
+    this.patchHelper = patchHelper;
+  }
 
   @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "find all")})
   @GetMapping("/findAll")
@@ -60,6 +72,41 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
       dto.setId((Long) id);
       return ResponseEntity.ok(getService().save(dto));
     } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "patch"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
+  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
+  public ResponseEntity<DTO> patch(@PathVariable ID id, @RequestBody JsonPatch patchDocument) {
+    LOGGER.info("patch: id={}", id);
+    try {
+      DTO old = getService().findById(id);
+      DTO patched = patchHelper.patch(patchDocument, old, type);
+      return ResponseEntity.ok(getService().save(patched));
+    } catch (EntityNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "merge patch"),
+        @ApiResponse(responseCode = "404", description = "not found")
+      })
+  @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
+  public ResponseEntity<DTO> patch(
+      @PathVariable ID id, @RequestBody JsonMergePatch mergePatchDocument) {
+    LOGGER.info("merge patch: id={}", id);
+    try {
+      DTO old = getService().findById(id);
+      DTO mergePatched = patchHelper.mergePatch(mergePatchDocument, old, type);
+      return ResponseEntity.ok(getService().save(mergePatched));
+    } catch (EntityNotFoundException e) {
       return ResponseEntity.notFound().build();
     }
   }

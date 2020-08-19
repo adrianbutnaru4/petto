@@ -1,6 +1,7 @@
 package com.petto.core.controller;
 
 import com.petto.core.controller.generics.BaseController;
+import com.petto.core.controller.util.PatchHelper;
 import com.petto.core.dto.user.UserDto;
 import com.petto.core.exceptionhandling.exceptions.EntityNotFoundException;
 import com.petto.core.service.UserService;
@@ -20,7 +21,8 @@ public class UserController extends BaseController<UserDto, Long> {
 
   private final UserService userService;
 
-  public UserController(UserService userService) {
+  public UserController(PatchHelper patchHelper, UserService userService) {
+    super(UserDto.class, patchHelper);
     this.userService = userService;
   }
 

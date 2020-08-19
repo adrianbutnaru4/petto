@@ -1,10 +1,13 @@
 package com.petto.core.client;
 
+import com.petto.core.controller.util.PatchMediaType;
 import com.petto.core.dto.post.PostDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.JsonMergePatch;
+import javax.json.JsonPatch;
 import java.util.List;
 
 @FeignClient(name = "petto-posting-service")
@@ -20,15 +23,24 @@ public interface PettoPostingClient {
       @RequestParam(name = "sortDirection") String sortDirection,
       @RequestParam(name = "sort") String sort);
 
-  @GetMapping("posts/{id}")
+  @GetMapping("/posts/{id}")
   ResponseEntity<PostDto> findById(@PathVariable("id") Long id);
 
-  @PostMapping("/posts/save")
+  @PostMapping(value = "/posts/save")
   ResponseEntity<PostDto> save(@RequestBody PostDto postDto);
 
-  @PutMapping("posts/{id}/update")
+  @PutMapping("/posts/{id}/update")
   ResponseEntity<PostDto> update(@PathVariable("id") Long id, @RequestBody PostDto postDto);
 
-  @DeleteMapping("posts/{id}/delete")
+  @PatchMapping(value = "/posts/{id}/patch", consumes = PatchMediaType.APPLICATION_JSON_PATCH_VALUE)
+  ResponseEntity<PostDto> patch(@PathVariable("id") Long id, @RequestBody JsonPatch patchDocument);
+
+  @PatchMapping(
+      value = "/posts/{id}/patch",
+      consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
+  ResponseEntity<PostDto> patch(
+      @PathVariable("id") Long id, @RequestBody JsonMergePatch mergePatchDocument);
+
+  @DeleteMapping("/posts/{id}/delete")
   ResponseEntity<Void> delete(@PathVariable("id") Long id);
 }

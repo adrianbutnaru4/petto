@@ -9,5 +9,5 @@ public interface PostService extends AbstractService {
 
   PostDto save(PostDto postDto);
 
-  List<PostDto> findAll(int page, int size, String sortDirection, String sort);
+  List<PostDto> findAllByPageRequest(int page, int size, String sortDirection, String sort);
 }

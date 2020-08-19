@@ -2,6 +2,7 @@ package com.petto.posting.model;
 
 import com.petto.posting.model.base.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Post extends BaseEntity {
 
   @Id
@@ -33,6 +35,5 @@ public class Post extends BaseEntity {
 
   private Timestamp creationDate;
 
-  @ElementCollection
-  private Map<String, Serializable> fields;
+  @ElementCollection private Map<String, Serializable> fields;
 }

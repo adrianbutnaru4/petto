@@ -1,11 +1,12 @@
 package com.petto.core.controller;
 
+import com.petto.core.controller.generics.BaseController;
+import com.petto.core.controller.util.PatchHelper;
 import com.petto.core.dto.adoptionsource.shelter.ShelterDto;
+import com.petto.core.service.ShelterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.petto.core.controller.generics.BaseController;
-import com.petto.core.service.ShelterService;
 
 @Slf4j
 @RestController
@@ -16,7 +17,8 @@ public class ShelterController extends BaseController<ShelterDto, Long> {
 
   private final ShelterService shelterService;
 
-  public ShelterController(ShelterService shelterService) {
+  public ShelterController(PatchHelper patchHelper, ShelterService shelterService) {
+    super(ShelterDto.class, patchHelper);
     this.shelterService = shelterService;
   }
 

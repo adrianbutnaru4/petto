@@ -18,6 +18,10 @@ management:
     health:
       show-details: ALWAYS
 
+feign:
+  httpclient:
+    enabled: true
+
 spring:
   resources:
     cache:

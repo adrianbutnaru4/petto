@@ -19,6 +19,7 @@
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <lombok.version>1.18.12</lombok.version>
         <springdoc.version>1.4.4</springdoc.version>
+        <feign.version>11.0</feign.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,17 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>${feign.version}</version>
         </dependency>
 
         <!-- Security -->

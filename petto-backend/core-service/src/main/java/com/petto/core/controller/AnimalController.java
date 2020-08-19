@@ -1,6 +1,7 @@
 package com.petto.core.controller;
 
 import com.petto.core.controller.generics.BaseController;
+import com.petto.core.controller.util.PatchHelper;
 import com.petto.core.dto.animal.AnimalDto;
 import com.petto.core.service.AnimalService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,8 @@ public class AnimalController extends BaseController<AnimalDto, Long> {
 
   private final AnimalService animalService;
 
-  public AnimalController(AnimalService animalService) {
+  public AnimalController(PatchHelper patchHelper, AnimalService animalService) {
+    super(AnimalDto.class, patchHelper);
     this.animalService = animalService;
   }
 

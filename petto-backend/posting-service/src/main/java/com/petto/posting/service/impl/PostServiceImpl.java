@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public List<PostDto> findAll(int page, int size, String sortDirection, String sort) {
+  public List<PostDto> findAllByPageRequest(int page, int size, String sortDirection, String sort) {
     return postRepository
         .findAll(PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sort))
         .getContent().stream()
