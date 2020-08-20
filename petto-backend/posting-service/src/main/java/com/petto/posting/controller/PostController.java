@@ -30,13 +30,14 @@ public class PostController extends BaseController<PostDto, Long> {
     return postService.save(postDto);
   }
 
-  @GetMapping("/findAllByPageRequest")
-  public List<PostDto> findAllByPageRequest(
-      @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size,
-      @RequestParam(name = "sortDirection") String sortDirection,
-      @RequestParam(name = "sort") String sort) {
-    return getService().findAllByPageRequest(page, size, sortDirection, sort);
+  @GetMapping("/findAllByPosterId")
+  public List<PostDto> findAllByPosterId(@RequestParam(name = "posterId") Long posterId) {
+    return getService().findAllByPosterId(posterId);
+  }
+
+  @GetMapping("/findAllByType")
+  public List<PostDto> findAllByType(@RequestParam(name = "type") String type) {
+    return getService().findAllByType(type);
   }
 
   @Override

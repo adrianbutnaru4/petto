@@ -4,7 +4,6 @@ import com.petto.core.mapper.AnimalMapper;
 import com.petto.core.repository.AnimalRepository;
 import com.petto.core.service.AnimalService;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +16,7 @@ public class AnimalServiceImpl implements AnimalService {
   }
 
   @Override
-  public PagingAndSortingRepository getRepository() {
+  public AnimalRepository getRepository() {
     return animalRepository;
   }
 

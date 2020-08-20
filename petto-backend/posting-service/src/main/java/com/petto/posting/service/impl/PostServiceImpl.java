@@ -7,9 +7,6 @@ import com.petto.posting.model.Post;
 import com.petto.posting.repository.PostRepository;
 import com.petto.posting.service.PostService;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -28,17 +25,20 @@ public class PostServiceImpl implements PostService {
   @Override
   public PostDto save(PostDto postDto) {
     Post post = getMapper().mapToEntity(getPostDto(postDto));
-    post = (Post) getRepository().save(post);
+    post = getRepository().save(post);
     return getMapper().mapToDto(post);
   }
 
   @Override
-  public List<PostDto> findAllByPageRequest(int page, int size, String sortDirection, String sort) {
-    return postRepository
-        .findAll(PageRequest.of(page, size, Sort.Direction.fromString(sortDirection), sort))
-        .getContent().stream()
-        .map(getMapper()::mapToDto)
-        .collect(Collectors.toList());
+  public List<PostDto> findAllByPosterId(Long posterId) {
+    List<Post> posts = getRepository().findAllByPosterId(posterId);
+    return posts.stream().map(getMapper()::mapToDto).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<PostDto> findAllByType(String type) {
+    List<Post> posts = getRepository().findAllByType(type);
+    return posts.stream().map(getMapper()::mapToDto).collect(Collectors.toList());
   }
 
   private PostDto getPostDto(PostDto postDto) {
@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public PagingAndSortingRepository getRepository() {
+  public PostRepository getRepository() {
     return postRepository;
   }
 

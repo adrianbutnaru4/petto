@@ -1,6 +1,7 @@
 package com.petto.core.service.impl;
 
 import com.petto.core.mapper.ShelterMapper;
+import com.petto.core.model.adoptionsource.shelter.Shelter;
 import com.petto.core.repository.ShelterRepository;
 import com.petto.core.service.ShelterService;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +18,7 @@ public class ShelterServiceImpl implements ShelterService {
   }
 
   @Override
-  public PagingAndSortingRepository getRepository() {
+  public ShelterRepository getRepository() {
     return shelterRepository;
   }
 

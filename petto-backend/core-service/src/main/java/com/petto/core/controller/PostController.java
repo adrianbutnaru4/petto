@@ -3,6 +3,7 @@ package com.petto.core.controller;
 import com.petto.core.client.PettoPostingClient;
 import com.petto.core.controller.util.PatchMediaType;
 import com.petto.core.dto.adoptionsource.post.BasePostDto;
+import com.petto.core.dto.adoptionsource.post.PostType;
 import com.petto.core.dto.post.PostDto;
 import com.petto.core.service.PostService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -86,6 +87,30 @@ public class PostController {
     LOGGER.info("find: id={}", id);
     return ResponseEntity.ok(
         postService.getCustomPostDto(pettoPostingClient.findById(id).getBody()));
+  }
+
+  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "find all by poster id")})
+  @GetMapping("/findAllByPosterId")
+  public ResponseEntity<List<BasePostDto>> findAllByPosterId(
+      @RequestParam(name = "posterId") Long posterId) {
+    LOGGER.info("find all by poster id: id={}", posterId);
+    return ResponseEntity.ok(
+        Optional.ofNullable(pettoPostingClient.findAllByPosterId(posterId).getBody()).stream()
+            .flatMap(Collection::stream)
+            .map(postService::getCustomPostDto)
+            .collect(Collectors.toList()));
+  }
+
+  @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "find all by type")})
+  @GetMapping("/findAllByType")
+  public ResponseEntity<List<BasePostDto>> findAllByType(
+      @RequestParam(name = "type") PostType type) {
+    LOGGER.info("find all by type: type={}", type);
+    return ResponseEntity.ok(
+        Optional.ofNullable(pettoPostingClient.findAllByType(type).getBody()).stream()
+            .flatMap(Collection::stream)
+            .map(postService::getCustomPostDto)
+            .collect(Collectors.toList()));
   }
 
   @ApiResponses(

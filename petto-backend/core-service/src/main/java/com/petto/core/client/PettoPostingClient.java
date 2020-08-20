@@ -1,6 +1,7 @@
 package com.petto.core.client;
 
 import com.petto.core.controller.util.PatchMediaType;
+import com.petto.core.dto.adoptionsource.post.PostType;
 import com.petto.core.dto.post.PostDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,12 @@ public interface PettoPostingClient {
 
   @GetMapping("/posts/{id}")
   ResponseEntity<PostDto> findById(@PathVariable("id") Long id);
+
+  @GetMapping("/posts/findAllByPosterId")
+  ResponseEntity<List<PostDto>> findAllByPosterId(@RequestParam(name = "posterId") Long posterId);
+
+  @GetMapping("/posts/findAllByType")
+  ResponseEntity<List<PostDto>> findAllByType(@RequestParam(name = "type") PostType type);
 
   @PostMapping(value = "/posts/save")
   ResponseEntity<PostDto> save(@RequestBody PostDto postDto);

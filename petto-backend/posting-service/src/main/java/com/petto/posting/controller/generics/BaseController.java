@@ -38,6 +38,15 @@ public abstract class BaseController<DTO extends BaseDto, ID extends Serializabl
     return getService().findAll();
   }
 
+  @GetMapping("/findAllByPageRequest")
+  public List<DTO> findAllByPageRequest(
+      @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "sortDirection") String sortDirection,
+      @RequestParam(name = "sort") String sort) {
+    return getService().findAllByPageRequest(page, size, sortDirection, sort);
+  }
+
   @ApiResponses(
       value = {
         @ApiResponse(responseCode = "200", description = "get by id"),

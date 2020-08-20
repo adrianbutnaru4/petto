@@ -2,6 +2,7 @@ package com.petto.core.service.impl;
 
 import com.petto.core.dto.user.UserDto;
 import com.petto.core.mapper.UserMapper;
+import com.petto.core.model.user.User;
 import com.petto.core.repository.UserRepository;
 import com.petto.core.service.UserService;
 import org.mapstruct.factory.Mappers;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public PagingAndSortingRepository getRepository() {
+  public UserRepository getRepository() {
     return userRepository;
   }
 

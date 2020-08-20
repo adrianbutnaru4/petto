@@ -4,7 +4,6 @@ import com.petto.core.mapper.AdoptionSourceMapper;
 import com.petto.core.repository.AdoptionSourceRepository;
 import com.petto.core.service.AdoptionSourceService;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +16,7 @@ public class AdoptionSourceServiceImpl implements AdoptionSourceService {
   }
 
   @Override
-  public PagingAndSortingRepository getRepository() {
+  public AdoptionSourceRepository getRepository() {
     return adoptionSourceRepository;
   }
 
