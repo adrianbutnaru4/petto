@@ -1,4 +1,4 @@
-package com.petto.auth.model;
+package com.petto.auth.dto;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

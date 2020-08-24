@@ -1,6 +1,6 @@
 package com.petto.auth.security;
 
-import com.petto.auth.model.UserDto;
+import com.petto.auth.dto.UserDto;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

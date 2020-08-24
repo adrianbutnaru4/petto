@@ -1,10 +1,10 @@
 package com.petto.auth.config;
 
-import com.petto.auth.model.JwtConfig;
+import com.petto.auth.dto.JwtConfig;
 import com.petto.auth.security.CustomUserDetailsService;
-import com.petto.auth.security.JwtUsernameAndPasswordAuthenticationFilter;
 import com.petto.auth.security.PettoAuthenticationEntryPoint;
 import com.petto.auth.security.TokenAuthenticationFilter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,12 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new TokenAuthenticationFilter();
   }
 
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    final JwtUsernameAndPasswordAuthenticationFilter jwtFilter =
-        new JwtUsernameAndPasswordAuthenticationFilter(authenticationManagerBean(), jwtConfig());
-    jwtFilter.setFilterProcessesUrl("/login");
-
     http.cors()
         .and()
         .sessionManagement()
@@ -75,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(new PettoAuthenticationEntryPoint())
         .and()
-        .addFilter(jwtFilter)
+        // .addFilter(jwtFilter)
         .authorizeRequests()
         .antMatchers(
             "/",
@@ -94,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.css",
             "/**/*.js")
         .permitAll()
-        .antMatchers("/login", "/oauth2/**", "/registration/**")
+        .antMatchers("/oauth2/**", "/registration/**")
         .permitAll()
         .anyRequest()
         .authenticated()

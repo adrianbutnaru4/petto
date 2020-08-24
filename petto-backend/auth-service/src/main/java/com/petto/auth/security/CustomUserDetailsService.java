@@ -1,7 +1,7 @@
 package com.petto.auth.security;
 
-import com.petto.auth.client.PettoUserClient;
-import com.petto.auth.model.UserDto;
+import com.petto.auth.dto.UserDto;
+import com.petto.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-  @Autowired private PettoUserClient pettoUserClient;
+  @Autowired private UserService userService;
 
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    UserDto user = pettoUserClient.findByEmail(email);
+    UserDto user = userService.findByEmail(email);
 
     return UserPrincipal.create(user);
   }
 
   @Transactional
   public UserDetails loadUserById(Long id) {
-    UserDto user = pettoUserClient.findById(id);
+    UserDto user = userService.findById(id);
 
     return UserPrincipal.create(user);
   }

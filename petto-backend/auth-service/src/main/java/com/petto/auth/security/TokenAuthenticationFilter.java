@@ -1,7 +1,5 @@
 package com.petto.auth.security;
 
-import com.petto.auth.model.JwtConfig;
-import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +16,9 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-  @Autowired private JwtConfig jwtConfig;
-
   @Autowired private CustomUserDetailsService customUserDetailsService;
+
+  @Autowired private JwtTokenUtil jwtTokenUtil;
 
   @Override
   protected void doFilterInternal(
@@ -29,8 +27,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     try {
       String jwt = getJwtFromRequest(request);
 
-      if (StringUtils.hasText(jwt) && this.validateToken(jwt)) {
-        Long userId = this.getUserIdFromToken(jwt);
+      if (StringUtils.hasText(jwt) && jwtTokenUtil.validateToken(jwt)) {
+        Long userId = jwtTokenUtil.getUserIdFromToken(jwt);
 
         UserDetails userDetails = customUserDetailsService.loadUserById(userId);
         UsernamePasswordAuthenticationToken authentication =
@@ -53,33 +51,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
       return bearerToken.substring(7, bearerToken.length());
     }
     return null;
-  }
-
-  private Long getUserIdFromToken(String token) {
-    Claims claims =
-        Jwts.parser()
-            .setSigningKey(jwtConfig.getSecret().getBytes())
-            .parseClaimsJws(token)
-            .getBody();
-
-    return Long.parseLong(claims.getSubject());
-  }
-
-  public boolean validateToken(String authToken) {
-    try {
-      Jwts.parser().setSigningKey(jwtConfig.getSecret().getBytes()).parseClaimsJws(authToken);
-      return true;
-    } catch (SignatureException ex) {
-      logger.error("Invalid JWT signature");
-    } catch (MalformedJwtException ex) {
-      logger.error("Invalid JWT token");
-    } catch (ExpiredJwtException ex) {
-      logger.error("Expired JWT token");
-    } catch (UnsupportedJwtException ex) {
-      logger.error("Unsupported JWT token");
-    } catch (IllegalArgumentException ex) {
-      logger.error("JWT claims string is empty.");
-    }
-    return false;
   }
 }
