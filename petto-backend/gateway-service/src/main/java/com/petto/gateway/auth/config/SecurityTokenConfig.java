@@ -49,6 +49,8 @@ public class SecurityTokenConfig {
         .permitAll()
         .pathMatchers("/auth/registration/login", "/auth/registration/signup")
         .permitAll()
+        .pathMatchers(HttpMethod.GET, "/core/users/findAll")
+        .hasAuthority("ADMIN")
         .pathMatchers("/actuator/**")
         .permitAll()
         .anyExchange()

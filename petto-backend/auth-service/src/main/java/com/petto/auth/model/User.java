@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -34,4 +35,8 @@ public class User {
   private String email;
 
   @JsonIgnore private String password;
+
+  @ElementCollection
+  @Column(nullable = false)
+  private List<String> roles = new ArrayList<String>();
 }

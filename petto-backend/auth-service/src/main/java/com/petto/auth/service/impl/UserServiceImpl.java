@@ -10,9 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +34,11 @@ public class UserServiceImpl implements UserService {
     user.setLastName(userDto.getLastName());
     user.setPassword(passwordEncoder.encode(userDto.getPassword()));
     user.setEmail(userDto.getEmail());
+    user.setRoles(userDto.getRoles());
+
+    if(user.getRoles() == null || user.getRoles().isEmpty()) {
+      user.setRoles(Collections.singletonList("USER"));
+    }
 
     return convertToDto(userRepository.save(user));
   }
@@ -61,6 +64,7 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByEmail(email).isPresent();
   }
 
+  // todo use mapstruct
   private UserDto convertToDto(User post) {
     return modelMapper.map(post, UserDto.class);
   }

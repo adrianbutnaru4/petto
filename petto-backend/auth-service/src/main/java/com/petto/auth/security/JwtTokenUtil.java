@@ -5,9 +5,13 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtTokenUtil {
@@ -25,6 +29,14 @@ public class JwtTokenUtil {
 
     Date now = new Date();
     Date expiryDate = new Date(now.getTime() + jwtConfig.getExpiration());
+    Map<String, Object> claims = new HashMap<>();
+    claims.put(
+        "roles",
+        userPrincipal.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.toList()));
+    claims.put(Claims.EXPIRATION, expiryDate);
+    claims.put(Claims.SUBJECT, Long.toString(userPrincipal.getId()));
 
     return new StringBuilder()
         .append(jwtConfig.getPrefix())
@@ -33,6 +45,7 @@ public class JwtTokenUtil {
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
+                .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret().getBytes())
                 .compact())
         .toString();

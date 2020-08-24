@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthenticationManager implements ReactiveAuthenticationManager {
@@ -29,12 +30,14 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
         return Mono.empty();
       }
       Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
-      List<String> rolesMap =
-          Optional.ofNullable(claims.get("role", List.class)).orElseGet(ArrayList::new);
-      List<GrantedAuthority> authorities = new ArrayList<>();
-      for (String rolemap : rolesMap) {
-        authorities.add(new SimpleGrantedAuthority(rolemap));
-      }
+      List<SimpleGrantedAuthority> authorities =
+          Optional.ofNullable(claims.get("roles", List.class))
+              .map(roles -> (List<String>) roles)
+              .map(
+                  roles ->
+                      roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()))
+              .orElseGet(ArrayList::new);
+
       return Mono.just(
           new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities));
     } catch (Exception e) {
